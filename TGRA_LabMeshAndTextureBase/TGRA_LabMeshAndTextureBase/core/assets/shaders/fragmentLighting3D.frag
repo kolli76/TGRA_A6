@@ -29,10 +29,19 @@ uniform float u_materialShininess;
 
 uniform vec4 u_materialEmission;
 
+//FOG stuff
+
+uniform float u_fogStart;
+uniform float u_fogEnd;
+uniform vec4 u_fogColor;
+
+varying float v_distance;
+
 varying vec2 v_uv;
 varying vec4 v_normal;
-varying vec4 v_s;
-varying vec4 v_h;
+varying vec4 v_s; //vector to the light
+varying vec4 v_h; //halfway vector
+
 
 void main()
 {
@@ -94,10 +103,22 @@ void main()
 
 	// end for each light
 	
-	
+	vec4 finalObjectColor = u_globalAmbient * materialDiffuse + materialEmission + light1CalcColor;
 
-	//gl_FragColor = u_globalAmbient + u_materialEmission + light1CalcColor;
-	gl_FragColor = u_globalAmbient * materialDiffuse + materialEmission + light1CalcColor;
+	//FOG stuff
+	if(v_distance < u_fogStart)
+	{
+		gl_FragColor = finalObjectColor;
+	}
+	else if(v_distance > u_fogEnd)
+	{
+		gl_FragColor = u_fogColor;
+	}
+	else
+	{
+		float fogRatio = (v_distance - u_fogStart) / (u_fogEnd - u_fogStart);
+		gl_FragColor = (1 - fogRatio) * finalObjectColor + fogRatio * u_fogColor;
+	}
 	gl_FragColor.a = materialDiffuse.a; //more transparency, transparent objects need to be drawn last
 	//in order to draw realistic transparency, we need to order the polygons so that that are drawn from farthest to nearest
 }

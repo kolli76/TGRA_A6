@@ -1,5 +1,6 @@
 package com.ru.tgra.graphics.motion;
 
+import com.ru.tgra.graphics.Bezier;
 import com.ru.tgra.graphics.Point3D;
 
 public class BezierMotion {
@@ -37,9 +38,7 @@ public class BezierMotion {
 		else
 		{
 			float t = (currentTime - startTime) / (endTime - startTime);
-			out_position.x = (1.0f - t) * (1.0f - t) * (1.0f - t) * P1.x + 3 * (1.0f - t) * (1.0f - t) * t * P2.x + 3 * (1.0f - t) * t * t * P3.x + t * t * t * P4.x; //lerp
-			out_position.y = (1.0f - t) * (1.0f - t) * (1.0f - t) * P1.y + 3 * (1.0f - t) * (1.0f - t) * t * P2.y + 3 * (1.0f - t) * t * t * P3.y + t * t * t * P4.y; //lerp
-			out_position.z = (1.0f - t) * (1.0f - t) * (1.0f - t) * P1.z + 3 * (1.0f - t) * (1.0f - t) * t * P2.z + 3 * (1.0f - t) * t * t * P3.z + t * t * t * P4.z; //lerp
+			Bezier.getPosition(P1,P2,P3,P4,t,out_position);
 		}
 	}
 }

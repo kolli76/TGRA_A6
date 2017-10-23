@@ -1,6 +1,7 @@
 package com.ru.tgra.game;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 
 import com.ru.tgra.graphics.*;
+import com.ru.tgra.graphics.motion.BSplineMotion;
 import com.ru.tgra.graphics.motion.BezierMotion;
 import com.ru.tgra.graphics.motion.LinearMotion;
 import com.ru.tgra.graphics.particles.ParticleEffect;
@@ -32,6 +34,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private Camera topCam;
 	
 	private float fov = 90.0f;
+	
 	float currentTime;
 	boolean firstFrame = true;
 
@@ -39,7 +42,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 	ParticleEffect particleEffect;
 	
-	BezierMotion motion;
+	//BezierMotion motion;
+	BSplineMotion motion;
 	Point3D modelPosition;
 
 	private Texture tex;
@@ -47,6 +51,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private Texture particleTex;
 	
 	Random rand = new Random();
+	
+	BezierPatch patch;
 
 	@Override
 	public void create () {
@@ -58,7 +64,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		shader = new Shader();
 
-		tex = new Texture(Gdx.files.internal("textures/GrayGradient01.png")); //switch to Fire or Gray for fire/smoke
+		tex = new Texture(Gdx.files.internal("textures/phobos2k.png")); //switch to Fire or Gray for fire/smoke
 		alphaTex = new Texture(Gdx.files.internal("textures/alphaMap01.png"));
 		particleTex = new Texture(Gdx.files.internal("textures/GrayGradient01.png"));
 
@@ -75,11 +81,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		particleEffect.fadeInTime = 5.0f;
 		particleEffect.fadeOutTime = 5.0f;
 		particleEffect.setParticleLifeTime(15.0f);
-		
-		motion = new BezierMotion(new Point3D(-1,4,-1), new Point3D(1,6,1), 
-									new Point3D(7,6,-4), new Point3D(1,3,1),
-									2.0f, 5.0f);
-		modelPosition = new Point3D();
 
 		BoxGraphic.create();
 		SphereGraphic.create();
@@ -108,6 +109,33 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tex = new Texture(pm);*/
 
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	
+		
+		ArrayList<Point3D> controlPoints = new ArrayList<Point3D>();
+		controlPoints.add(new Point3D(0.4f, 2.0f, 1.0f));
+		controlPoints.add(new Point3D(2.7f, 5.0f, 0.2f));
+		controlPoints.add(new Point3D(3.5f, 2.0f, 0.9f));
+		controlPoints.add(new Point3D(6.8f, 7.0f, 0.0f));
+		controlPoints.add(new Point3D(0.0f, 6.0f, 2.0f));
+		controlPoints.add(new Point3D(2.3f, 5.0f, 2.0f));
+		controlPoints.add(new Point3D(4.0f, -2.0f, 2.5f));
+		controlPoints.add(new Point3D(6.9f, -5.0f, 2.0f));
+		controlPoints.add(new Point3D(0.0f, 6.0f, 4.4f));
+		controlPoints.add(new Point3D(2.2f, 2.0f, 4.0f));
+		controlPoints.add(new Point3D(4.0f, 4.0f, 4.0f));
+		controlPoints.add(new Point3D(6.0f, 7.0f, 4.8f));
+		controlPoints.add(new Point3D(0.5f, 4.0f, 6.0f));
+		controlPoints.add(new Point3D(2.0f, -2.0f, 6.0f));
+		controlPoints.add(new Point3D(4.0f, 1.0f, 6.0f));
+		controlPoints.add(new Point3D(6.0f, 3.0f, 6.0f));
+		patch = new BezierPatch(controlPoints);
+	/*	
+		motion = new BezierMotion(new Point3D(-1,4,-1), new Point3D(1,6,1), 
+									new Point3D(7,6,-4), new Point3D(1,3,1),
+									3.0f, 10.0f);*/
+		
+		motion = new BSplineMotion(controlPoints, 1.0f, 20.0f);
+		modelPosition = new Point3D();
 	}
 
 	private void input()
@@ -193,8 +221,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private void display()
 	{
 		//do all actual drawing and rendering here
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
+		Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
+		
 		Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 		//Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 
@@ -210,20 +238,34 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			if(viewNum == 0)
 			{
 				Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				cam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 100.0f);
+				Gdx.gl.glScissor(0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+				cam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 20.0f);
 				shader.setViewMatrix(cam.getViewMatrix());
 				shader.setProjectionMatrix(cam.getProjectionMatrix());
 				shader.setEyePosition(cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
+				
+				shader.setFogStart(0.0f);
+				shader.setFogEnd(20.0f);
+				shader.setFogColor(0.7f, 0.7f, 0.7f, 1.0f);
+				Gdx.gl.glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
 			{
 				Gdx.gl.glViewport(Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+				Gdx.gl.glScissor(Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
 				topCam.look(new Point3D(cam.eye.x, 20.0f, cam.eye.z), cam.eye, new Vector3D(0,0,-1));
 				//orthoCam.look(new Point3D(7.0f, 40.0f, -7.0f), new Point3D(7.0f, 0.0f, -7.0f), new Vector3D(0,0,-1));
 				topCam.perspectiveProjection(30.0f, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 3, 100);
 				shader.setViewMatrix(topCam.getViewMatrix());
 				shader.setProjectionMatrix(topCam.getProjectionMatrix());
 				shader.setEyePosition(topCam.eye.x, topCam.eye.y, topCam.eye.z, 1.0f);
+				
+				shader.setFogStart(90.0f);
+				shader.setFogEnd(100.0f);
+				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 
 	
@@ -233,6 +275,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 
 			ModelMatrix.main.loadIdentityMatrix();
+			
+			//patch.draw(shader);
 
 			drawPyramids();
 
@@ -270,7 +314,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 			ModelMatrix.main.pushMatrix();
 			//ModelMatrix.main.addTranslation(0.0f, 4.0f, 0.0f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
 			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 
@@ -278,7 +322,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
 			//model.draw(shader, tex);
 			//SpriteGraphic.drawSprite(shader, tex, particleTex);
-			particleEffect.draw(shader);
+			//particleEffect.draw(shader);
 			
 			ModelMatrix.main.popMatrix();
 	

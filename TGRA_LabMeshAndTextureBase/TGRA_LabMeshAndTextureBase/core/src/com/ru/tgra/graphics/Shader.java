@@ -49,6 +49,10 @@ public class Shader {
 	private int matSpecLoc;
 	private int matShineLoc;
 	private int matEmissionLoc;
+	
+	private int fogStartLoc;
+	private int fogEndLoc;
+	private int fogColorLoc;
 
 	public Shader()
 	{
@@ -117,6 +121,10 @@ public class Shader {
 		matDifLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialDiffuse");
 		matSpecLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialSpecular");
 		matShineLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialShininess");
+		
+		fogStartLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_fogStart");
+		fogEndLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_fogEnd");
+		fogColorLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_fogColor");
 		
 		matEmissionLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialEmission");
 
@@ -263,5 +271,20 @@ public class Shader {
 	public void setProjectionMatrix(FloatBuffer matrix)
 	{
 		Gdx.gl.glUniformMatrix4fv(projectionMatrixLoc, 1, false, matrix);
+	}
+	
+	public void setFogStart(float att)
+	{
+		Gdx.gl.glUniform1f(fogStartLoc, att);
+	}
+	
+	public void setFogEnd(float att)
+	{
+		Gdx.gl.glUniform1f(fogEndLoc, att);
+	}
+	
+	public void setFogColor(float r, float g, float b, float a)
+	{
+		Gdx.gl.glUniform4f(fogColorLoc, r, g, b, a);
 	}
 }

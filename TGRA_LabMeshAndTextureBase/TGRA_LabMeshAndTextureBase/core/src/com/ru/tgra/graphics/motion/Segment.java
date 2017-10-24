@@ -43,6 +43,32 @@ public class Segment {
 		
 		pointB = new Point3D(pointA.x + dx, pointA.y + dy, pointA.z + dz);
 	}
+	
+	public void updateSegment()
+	{
+		calculateB();
+	}
+	
+	public void follow(Point3D point)
+	{
+		//Vector3D target = new Vector3D(point.x, point.y, point.z);
+		Vector3D dir = pointA.to(point);
+		
+		polarAngle = (float) (Math.acos(dir.y/dir.length()));
+		
+		if (dir.x < 0) 
+		{
+			azimuthAngle = (float) (Math.atan(dir.z/dir.x) + Math.PI);
+		}
+		else
+		{
+			azimuthAngle = (float) (Math.atan(dir.z/dir.x));
+		}
+		System.out.println( "angle "+ azimuthAngle);
+		calculateB();
+		//System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
+		//System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
+	}
 
 	public void drawSegment(Shader shader)
 	{

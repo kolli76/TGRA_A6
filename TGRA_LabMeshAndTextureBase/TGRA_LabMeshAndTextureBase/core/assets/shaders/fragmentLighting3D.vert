@@ -60,7 +60,6 @@ void main()
 		v_h = v_s[i] + normalize(v);
 	}
 	
-
 	position = u_viewMatrix * position;
 	//eye coordinates
 	

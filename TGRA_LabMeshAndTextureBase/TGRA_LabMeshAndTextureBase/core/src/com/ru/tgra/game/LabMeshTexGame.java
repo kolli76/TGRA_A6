@@ -293,15 +293,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
 			float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
 
-			shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
+			shader.setSpotDirection(0, s2, -0.3f, c2, 0.0f);
 			//shader.setSpotDirection(-cam.n.x, -cam.n.y, -cam.n.z, 0.0f);
-			shader.setSpotExponent(0.0f);
-			shader.setConstantAttenuation(1.0f);
-			shader.setLinearAttenuation(0.00f);
-			shader.setQuadraticAttenuation(0.00f);
+			shader.setSpotExponent(0, 0.0f);
+			shader.setConstantAttenuation(0, 1.0f);
+			shader.setLinearAttenuation(0, 0.00f);
+			shader.setQuadraticAttenuation(0, 0.00f);
 
 			//shader.setLightColor(s2, 0.4f, c2, 1.0f);
-			shader.setLightColor(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
 			
 			shader.setGlobalAmbient(0.3f, 0.3f, 0.3f, 1);
 

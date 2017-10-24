@@ -55,6 +55,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private Texture tex3;
 	private Texture tex4;
 	private Texture tex5;
+	private Texture tex6;
 	private Texture alphaTex;
 	private Texture particleTex;
 	
@@ -76,19 +77,25 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tex2 = new Texture(Gdx.files.internal("textures/granite02.png")); 
 		tex3 = new Texture(Gdx.files.internal("textures/marble01.png")); 
 		tex4 = new Texture(Gdx.files.internal("textures/pinkMarble01.png")); 
-		tex5 = new Texture(Gdx.files.internal("textures/slate01.png")); 
-		alphaTex = new Texture(Gdx.files.internal("textures/alphaMap01.png"));
-		particleTex = new Texture(Gdx.files.internal("textures/phobos2k.png"));
+		tex5 = new Texture(Gdx.files.internal("textures/slate01.png"));
+		tex6 = new Texture(Gdx.files.internal("textures/phobos2k.png"));
+		alphaTex = new Texture(Gdx.files.internal("textures/bubble02.png"));
+		particleTex = new Texture(Gdx.files.internal("textures/bubble01.png"));
 
 		model = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model2 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model3 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model4 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model5 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
+		//bubbles
+		particleEffect = new ParticleEffect(new Point3D(5,0,5), 
+				20.0f, 2.0f, 0.2f, 0.1f, 0.2f, 0.3f, 
+				particleTex, alphaTex);
+		
 		//fire
-		particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
+		/*particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
 										120.0f, 1.0f, 0.4f, 0.1f, 0.2f, 0.3f, 
-										tex, particleTex);
+										particleTex, alphaTex);*/
 		//smoke
 	/*	particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
 				20.0f, 10.0f, 2.8f, 2.0f, 2.2f, 0.3f, 
@@ -280,8 +287,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				
 				shader.setFogStart(0.0f);
 				shader.setFogEnd(20.0f);
-				shader.setFogColor(1.0f, 1.0f, 1.0f, 1.0f);
-				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
@@ -297,8 +304,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				
 				shader.setFogStart(90.0f);
 				shader.setFogEnd(100.0f);
-				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				shader.setFogColor(1.0f, 1.0f, 1.0f, 1.0f);
+				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 
@@ -355,7 +362,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 			//BoxGraphic.drawSolidCube(shader, null, null);
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			model.draw(shader, particleTex);
+			model.draw(shader, tex6);
 			//SpriteGraphic.drawSprite(shader, tex, particleTex);
 			//particleEffect.draw(shader);
 			
@@ -435,7 +442,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
 			model5.draw(shader, tex5);
 			
+	
+			
 			ModelMatrix.main.popMatrix();
+			
 			Gdx.gl.glEnable(GL20.GL_BLEND); //switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
 			//when we put a new pixel we mix the new color in a pixel with old value of pixel
 			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE); //add up colors, the one thats there with the one thats coming in
@@ -458,8 +468,38 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			BoxGraphic.drawSolidCube(shader, null, null);
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
 			
+			//particleEffect.draw(shader);
+			ModelMatrix.main.popMatrix();
+			
+			//Gdx.gl.glEnable(GL20.GL_BLEND); //switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
+			//when we put a new pixel we mix the new color in a pixel with old value of pixel
+			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE); //add up colors, the one thats there with the one thats coming in
+			//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA); //source color, destination color, traditional transparency
+			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
+			//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+			//shader.setMaterialDiffuse(s, 0.4f, c, 1.0f);
+			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+			shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
+			shader.setShininess(5.0f);
+
+			ModelMatrix.main.pushMatrix();
+			//ModelMatrix.main.addTranslation(4.0f, 6.0f, 4.0f);
+			ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			//ModelMatrix.main.addScale(1.3f, 0.1f, 0.2f);
+			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+			//BoxGraphic.drawSolidCube(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, tex, null);
+			//model.draw(shader, particleTex);
+			//SpriteGraphic.drawSprite(shader, tex, particleTex);
+			particleEffect.draw(shader);
 			
 			ModelMatrix.main.popMatrix();
+			
+			
 	
 			
 		}

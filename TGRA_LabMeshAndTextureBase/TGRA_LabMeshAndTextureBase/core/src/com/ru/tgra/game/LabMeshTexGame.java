@@ -449,7 +449,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setShininess(10.0f);
 
 			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(3.0f, 1.5f, 3.0f);
+			ModelMatrix.main.addTranslation(3.0f, 1.4f, 3.0f);
 			ModelMatrix.main.addScale(6.0f, 3.0f, 6.0f);
 			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
 			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));

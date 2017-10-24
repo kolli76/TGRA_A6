@@ -157,7 +157,7 @@ public class BezierPatch {
 			
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 			
-			SphereGraphic.drawSolidSphere(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, null, null);
 			
 			ModelMatrix.main.popMatrix();
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());

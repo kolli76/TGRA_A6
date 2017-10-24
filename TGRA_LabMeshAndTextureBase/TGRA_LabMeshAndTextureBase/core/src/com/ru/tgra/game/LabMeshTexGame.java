@@ -39,6 +39,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	boolean firstFrame = true;
 
 	MeshModel model;
+	MeshModel model2;
+	MeshModel model3;
+	MeshModel model4;
+	MeshModel model5;
 	
 	ParticleEffect particleEffect;
 	
@@ -47,6 +51,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	Point3D modelPosition;
 
 	private Texture tex;
+	private Texture tex2;
+	private Texture tex3;
+	private Texture tex4;
+	private Texture tex5;
 	private Texture alphaTex;
 	private Texture particleTex;
 	
@@ -64,11 +72,19 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		shader = new Shader();
 
-		tex = new Texture(Gdx.files.internal("textures/FireGradient01.png")); //switch to Fire or Gray for fire/smoke
+		tex = new Texture(Gdx.files.internal("textures/sand5.png")); 
+		tex2 = new Texture(Gdx.files.internal("textures/granite02.png")); 
+		tex3 = new Texture(Gdx.files.internal("textures/marble01.png")); 
+		tex4 = new Texture(Gdx.files.internal("textures/pinkMarble01.png")); 
+		tex5 = new Texture(Gdx.files.internal("textures/slate01.png")); 
 		alphaTex = new Texture(Gdx.files.internal("textures/alphaMap01.png"));
-		particleTex = new Texture(Gdx.files.internal("textures/GrayGradient01.png"));
+		particleTex = new Texture(Gdx.files.internal("textures/phobos2k.png"));
 
 		model = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
+		model2 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
+		model3 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
+		model4 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
+		model5 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		//fire
 		particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
 										120.0f, 1.0f, 0.4f, 0.1f, 0.2f, 0.3f, 
@@ -108,7 +124,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		}
 		tex = new Texture(pm);*/
 
-		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	
 		
 		ArrayList<Point3D> controlPoints = new ArrayList<Point3D>();
@@ -130,19 +146,19 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		controlPoints.add(new Point3D(4.0f, 1.0f, 6.0f));
 		controlPoints.add(new Point3D(6.0f, 3.0f, 6.0f));
 		*/
-		controlPoints.add(new Point3D(0.4f, 0.0f, 1.0f));
-		controlPoints.add(new Point3D(2.7f, 0.0f, 0.2f));
-		controlPoints.add(new Point3D(3.5f, 0.0f, 0.9f));
-		controlPoints.add(new Point3D(6.8f, 0.0f, 0.0f));
+		controlPoints.add(new Point3D(0.0f, 0.0f, 0.0f));
+		controlPoints.add(new Point3D(2.0f, 0.0f, 0.0f));
+		controlPoints.add(new Point3D(4.0f, 0.0f, 0.0f));
+		controlPoints.add(new Point3D(6.0f, 0.0f, 0.0f));
 		controlPoints.add(new Point3D(0.0f, 0.0f, 2.0f));
-		controlPoints.add(new Point3D(2.3f, 0.0f, 2.0f));
-		controlPoints.add(new Point3D(4.0f, 0.0f, 2.5f));
-		controlPoints.add(new Point3D(6.9f, 0.0f, 2.0f));
-		controlPoints.add(new Point3D(0.0f, 0.0f, 4.4f));
-		controlPoints.add(new Point3D(2.2f, 0.0f, 4.0f));
+		controlPoints.add(new Point3D(2.0f, 0.0f, 2.0f));
+		controlPoints.add(new Point3D(4.0f, 0.0f, 2.0f));
+		controlPoints.add(new Point3D(6.0f, 0.0f, 2.0f));
+		controlPoints.add(new Point3D(0.0f, 0.0f, 4.0f));
+		controlPoints.add(new Point3D(2.0f, 0.0f, 4.0f));
 		controlPoints.add(new Point3D(4.0f, 0.0f, 4.0f));
-		controlPoints.add(new Point3D(6.0f, 0.0f, 4.8f));
-		controlPoints.add(new Point3D(0.5f, 0.0f, 6.0f));
+		controlPoints.add(new Point3D(6.0f, 0.0f, 4.0f));
+		controlPoints.add(new Point3D(0.0f, 0.0f, 6.0f));
 		controlPoints.add(new Point3D(2.0f, 0.0f, 6.0f));
 		controlPoints.add(new Point3D(4.0f, 0.0f, 6.0f));
 		controlPoints.add(new Point3D(6.0f, 0.0f, 6.0f));
@@ -264,8 +280,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				
 				shader.setFogStart(0.0f);
 				shader.setFogEnd(20.0f);
-				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				shader.setFogColor(1.0f, 1.0f, 1.0f, 1.0f);
+				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
@@ -294,9 +310,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 			ModelMatrix.main.loadIdentityMatrix();
 			
-			//patch.draw(shader, tex);
+			patch.draw(shader, tex);
 
-			drawPyramids();
+			//drawPyramids();
 
 			//ModelMatrix.main.addRotationZ(angle);
 
@@ -327,20 +343,121 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
 			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
-			shader.setShininess(50.0f);
+			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+			shader.setShininess(5.0f);
 
 			ModelMatrix.main.pushMatrix();
-			//ModelMatrix.main.addTranslation(0.0f, 4.0f, 0.0f);
-			ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			ModelMatrix.main.addTranslation(4.0f, 0.0f, 4.0f);
+			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			ModelMatrix.main.addScale(0.3f, 0.1f, 0.2f);
 			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 
 			//BoxGraphic.drawSolidCube(shader, null, null);
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			//model.draw(shader, particleTex);
+			model.draw(shader, particleTex);
 			//SpriteGraphic.drawSprite(shader, tex, particleTex);
-			particleEffect.draw(shader);
+			//particleEffect.draw(shader);
+			
+			ModelMatrix.main.popMatrix();
+			
+			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+			shader.setShininess(4.0f);
+
+			ModelMatrix.main.pushMatrix();
+			ModelMatrix.main.addTranslation(1.0f, 0.0f, 1.0f);
+			ModelMatrix.main.addScale(0.2f, 0.1f, 0.5f);
+			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			//ModelMatrix.main.addRotation(180.0f, new Vector3D(1,1,1));
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+			//BoxGraphic.drawSolidCube(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, tex, null);
+			model2.draw(shader, tex2);
+			
+			ModelMatrix.main.popMatrix();
+			
+			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+			shader.setShininess(3.0f);
+
+			ModelMatrix.main.pushMatrix();
+			ModelMatrix.main.addTranslation(3.0f, 0.0f, 4.0f);
+			ModelMatrix.main.addScale(0.5f, 0.5f, 0.5f);
+			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+			//BoxGraphic.drawSolidCube(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, tex, null);
+			model3.draw(shader, tex3);
+			
+			ModelMatrix.main.popMatrix();
+			
+			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+			shader.setShininess(2.0f);
+
+			ModelMatrix.main.pushMatrix();
+			ModelMatrix.main.addTranslation(5.0f, 0.0f, 3.0f);
+			ModelMatrix.main.addScale(0.2f, 0.1f, 0.3f);
+			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+			//BoxGraphic.drawSolidCube(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, tex, null);
+			model4.draw(shader, tex4);
+			
+			ModelMatrix.main.popMatrix();
+			
+			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+			shader.setShininess(1.0f);
+
+			ModelMatrix.main.pushMatrix();
+			ModelMatrix.main.addTranslation(1.0f, 0.0f, 5.0f);
+			ModelMatrix.main.addScale(0.1f, 0.2f, 0.3f);
+			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+			//BoxGraphic.drawSolidCube(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, tex, null);
+			model5.draw(shader, tex5);
+			
+			ModelMatrix.main.popMatrix();
+			Gdx.gl.glEnable(GL20.GL_BLEND); //switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
+			//when we put a new pixel we mix the new color in a pixel with old value of pixel
+			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE); //add up colors, the one thats there with the one thats coming in
+			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA); //source color, destination color, traditional transparency
+			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
+			//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+			shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.5f);
+			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 0.0f);
+			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 0);
+			shader.setShininess(10.0f);
+
+			ModelMatrix.main.pushMatrix();
+			ModelMatrix.main.addTranslation(3.0f, 1.5f, 3.0f);
+			ModelMatrix.main.addScale(6.0f, 3.0f, 6.0f);
+			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+			BoxGraphic.drawSolidCube(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, tex, null);
+			
 			
 			ModelMatrix.main.popMatrix();
 	

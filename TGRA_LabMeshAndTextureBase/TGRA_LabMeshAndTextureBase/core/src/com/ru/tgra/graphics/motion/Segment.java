@@ -32,8 +32,8 @@ public class Segment {
 		this.pointA = pos;
 		this.parent = parent;
 		calculateB();
-		System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
-		System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
+		//System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
+		//System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
 	}
 	
 	private void calculateB()

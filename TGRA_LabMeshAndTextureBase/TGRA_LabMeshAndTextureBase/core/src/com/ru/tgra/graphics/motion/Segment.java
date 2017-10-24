@@ -12,7 +12,8 @@ public class Segment {
 	
 	Point3D pointA;
 	Point3D pointB;
-	Segment next;
+	//Segment child;
+	Segment parent;
 	
 	float length;
 	
@@ -21,15 +22,15 @@ public class Segment {
 	float azimuthAngle;
 	float maxAngle;
 	
-	public Segment(Point3D pos, float length, Segment next)
+	public Segment(Point3D pos, float length, Segment parent)
 	{
 		polarAngle = (float) (Math.PI/4);
 		azimuthAngle = (float) (Math.PI/4);
-		maxAngle = 0.1f;
+		//maxAngle = 0.1f;
 		this.length = length;
 		
 		this.pointA = pos;
-		this.next = next;
+		this.parent = parent;
 		calculateB();
 		System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
 		System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
@@ -64,10 +65,23 @@ public class Segment {
 		{
 			azimuthAngle = (float) (Math.atan(dir.z/dir.x));
 		}
-		System.out.println( "angle "+ azimuthAngle);
-		calculateB();
-		Vector3D movmentA = pointA.to(pointB);
-		pointA.set(point.x - movmentA.x, point.y - movmentA.y, point.z - movmentA.z);
+		//System.out.println( "angle "+ azimuthAngle);
+		
+		float dx = (float) (length * Math.sin(polarAngle) * Math.cos(azimuthAngle));
+		float dy = (float) (length * Math.cos(polarAngle));
+		float dz = (float) (length * Math.sin(polarAngle) * Math.sin(azimuthAngle));
+		
+		Vector3D movementA = new Vector3D(dx,dy,dz);
+		movementA.scale(this.length);
+		pointA.set(point.x - movementA.x, point.y - movementA.y, point.z - movementA.z);
+		pointB.set(point.x, point.y, point.z);
+		
+		if(this.parent != null)
+		{
+			this.parent.follow(pointA);
+		}
+
+		
 		//System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
 		//System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
 	}

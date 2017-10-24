@@ -287,7 +287,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 			//shader.setLightPosition(0.0f + c * 3.0f, 5.0f, 0.0f + s * 3.0f, 1.0f);
 			//shader.setLightPosition(3.0f, 4.0f, 0.0f, 1.0f);
-			shader.setLightPosition(cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
+			shader.setLightPosition(0, cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
 
 
 			float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));

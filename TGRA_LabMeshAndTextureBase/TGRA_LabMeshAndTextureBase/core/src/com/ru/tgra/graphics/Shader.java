@@ -36,7 +36,8 @@ public class Shader {
 
 	private int globalAmbLoc;
 	//private int colorLoc;
-	private int lightPosLoc;
+	private int numberOfLights = 1;
+	private int lightPosLoc[] = new int[numberOfLights];
 
 	private int spotDirLoc;
 	private int spotExpLoc;
@@ -109,8 +110,11 @@ public class Shader {
 
 		globalAmbLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_globalAmbient");
 
-		lightPosLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_lightPosition");
-
+		
+		for(int i = 0; i < numberOfLights; i++)
+		{
+			lightPosLoc[i]				= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsV["+i+"].lightPosition");
+		}
 		spotDirLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_spotDirection");
 		spotExpLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_spotExponent");
 		constantAttLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_constantAttenuation");
@@ -199,9 +203,10 @@ public class Shader {
 	{
 		Gdx.gl.glUniform4f(globalAmbLoc, r, g, b, a);
 	}
-	public void setLightPosition(float x, float y, float z, float w)
+	public void setLightPosition(int i, float x, float y, float z, float w)
 	{
-		Gdx.gl.glUniform4f(lightPosLoc, x, y, z, w);
+		if (i >= numberOfLights){return;}
+		Gdx.gl.glUniform4f(lightPosLoc[i], x, y, z, w);	
 	}
 
 	public void setSpotDirection(float x, float y, float z, float w)

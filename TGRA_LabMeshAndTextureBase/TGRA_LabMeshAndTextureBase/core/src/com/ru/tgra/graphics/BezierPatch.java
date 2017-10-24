@@ -137,7 +137,7 @@ public class BezierPatch {
 
 	}
 	
-	public void draw(Shader shader) {
+	public void draw(Shader shader, Texture tex) {
 
 
 		shader.setMaterialDiffuse(0.5f, 0.5f, 0.5f, 1.0f);
@@ -157,12 +157,12 @@ public class BezierPatch {
 			
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 			
-			SphereGraphic.drawSolidSphere(shader, null, null);
+			//SphereGraphic.drawSolidSphere(shader, null, null);
 			
 			ModelMatrix.main.popMatrix();
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 		}
-		shader.setDiffuseTexture(null);
+		shader.setDiffuseTexture(tex);
 		shader.setAlphaTexture(null);
 		shader.setEmissionTexture(null);
 

@@ -66,6 +66,8 @@ public class Segment {
 		}
 		System.out.println( "angle "+ azimuthAngle);
 		calculateB();
+		Vector3D movmentA = pointA.to(pointB);
+		pointA.set(point.x - movmentA.x, point.y - movmentA.y, point.z - movmentA.z);
 		//System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
 		//System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
 	}
@@ -100,7 +102,7 @@ public class Segment {
 		
 		
 		ModelMatrix.main.pushMatrix();
-		ModelMatrix.main.addTranslation((pointB.x-pointA.x)/2, (pointB.y-pointA.y)/2, (pointB.z-pointA.z)/2);
+		ModelMatrix.main.addTranslation((pointB.x+pointA.x)/2, (pointB.y+pointA.y)/2, (pointB.z+pointA.z)/2);
 		
 		Vector3D temp = pointA.to(pointB);
 		temp.normalize();

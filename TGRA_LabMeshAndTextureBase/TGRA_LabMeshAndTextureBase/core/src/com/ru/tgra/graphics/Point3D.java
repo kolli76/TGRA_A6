@@ -33,4 +33,9 @@ public class Point3D {
 		this.y = y;
 		this.z = z;
 	}
+	
+	public Vector3D to(Point3D destination)
+	{
+		return new Vector3D(destination.x - this.x, destination.y - this.y, destination.z - this.z);
+	}
 }

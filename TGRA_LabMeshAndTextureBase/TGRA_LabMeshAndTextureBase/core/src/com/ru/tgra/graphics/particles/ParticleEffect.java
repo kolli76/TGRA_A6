@@ -74,9 +74,9 @@ public class ParticleEffect {
 		while(deltaTime >= particleInterval)
 		{																					//-0.5f for smoke, +0.5f for fire
 			Vector3D particleSpeed = new Vector3D(rand.nextFloat() - 0.5f, rand.nextFloat() + 0.5f, rand.nextFloat() - 0.5f);
-			particleSpeed.scale(0.2f); //slow down for smoke, comment out for fire
+			//particleSpeed.scale(0.2f); //slow down for smoke, comment out for fire
 			//randomize where we generate for smoke, for fire only pos.xyz
-			Particle particle = new Particle(new Point3D(position.x + rand.nextFloat() - 0.5f, position.y + rand.nextFloat() - 0.5f, position.z + rand.nextFloat() - 0.5f), 
+			Particle particle = new Particle(new Point3D(position.x, position.y, position.z), 
 					particleSpeed, particleSize, particleLifeTime, fadeInTime, fadeOutTime, maxAlpha,
 					emissionTexture, alphaTexture);
 			particle.update(deltaTime);
@@ -98,8 +98,8 @@ public class ParticleEffect {
 		Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
 		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);//smoke with graygradient
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE); //source color, destination color, traditional transparency
+		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);//smoke with graygradient
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE); //source color, destination color, traditional transparency
 		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
 		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
 		

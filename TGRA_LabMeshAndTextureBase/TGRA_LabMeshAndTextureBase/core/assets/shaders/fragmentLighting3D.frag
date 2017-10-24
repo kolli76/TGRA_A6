@@ -4,8 +4,6 @@
 precision mediump float;
 #endif
 
-const int lightNr = 1;
-
 uniform sampler2D u_diffuseTexture;
 uniform sampler2D u_alphaTexture;
 uniform sampler2D u_emissionTexture;
@@ -16,17 +14,14 @@ uniform float u_usesEmissionTexture;
 
 uniform vec4 u_globalAmbient;
 
-struct lightFragment
-{
-	vec4 lightColor; //we could use uniform vec4 u_lightColor[]; instead of struct
-	vec4 spotDirection;
-	float spotExponent;
-	float constantAttenuation;
-	float linearAttenuation;
-	float quadraticAttenuation;
-};
+uniform vec4 u_lightColor;
 
-uniform lightFragment lightsF[lightNr];
+uniform vec4 u_spotDirection;
+uniform float u_spotExponent;
+
+uniform float u_constantAttenuation;
+uniform float u_linearAttenuation;
+uniform float u_quadraticAttenuation;
 
 uniform vec4 u_materialDiffuse;
 uniform vec4 u_materialSpecular;
@@ -44,7 +39,7 @@ varying float v_distance;
 
 varying vec2 v_uv;
 varying vec4 v_normal;
-varying vec4 v_s[lightNr]; //vector to the light
+varying vec4 v_s; //vector to the light
 varying vec4 v_h; //halfway vector
 
 
@@ -83,42 +78,32 @@ void main()
 	}
 */
 	vec4 materialSpecular = u_materialSpecular;
-	vec4 light1CalcColor;
+
 	//Lighting
-	float lambert;
-	float phong;
-	float length_s[lightNr];
-	for(int i = 0; i < lightNr; i++)
-	{
-		length_s[i] = length(v_s[i]);
-	}
-	//float length_s = length(v_s);
-	float length_n = length(v_normal);
-	float spotAttenuation = 1.0;
-	vec4 totalFragColor = u_materialEmission;
-	for(int i = 0; i < lightNr; i++)
-	{
-		lambert = max(0.0, dot(v_normal, v_s[i]) / (length_n * length_s[i]));
-		phong = max(0.0, dot(v_normal, v_h) / (length_n * length(v_h)));
-		phong = pow(phong, u_materialShininess);
-		
-		vec4 diffuseColor = lambert * lightsF[i].lightColor * materialDiffuse;
-
-		vec4 specularColor =  phong * lightsF[i].lightColor * materialSpecular;
-
-		if(lightsF[i].spotExponent != 0.0)
-		{
-			spotAttenuation = max(0.0, dot(-v_s[i], lightsF[i].spotDirection) / (length_s[i] * length(lightsF[i].spotDirection)));
-			spotAttenuation = pow(spotAttenuation, lightsF[i].spotExponent);
-		}
-		float distanceAttenuation = 1.0 / (lightsF[i].constantAttenuation + length_s[i] * lightsF[i].linearAttenuation + pow(length_s[i], 2.0) * lightsF[i].quadraticAttenuation);
 	
-		light1CalcColor = distanceAttenuation * spotAttenuation * (diffuseColor + specularColor);
-		totalFragColor += light1CalcColor;
+	float length_s = length(v_s);
+	
+	float lambert = max(0.0, dot(v_normal, v_s) / (length(v_normal) * length_s));
+	float phong = max(0.0, dot(v_normal, v_h) / (length(v_normal) * length(v_h)));
+
+	vec4 diffuseColor = lambert * u_lightColor * materialDiffuse;
+
+	vec4 specularColor = pow(phong, u_materialShininess) * u_lightColor * materialSpecular;
+
+	float attenuation = 1.0;
+	if(u_spotExponent != 0.0)
+	{
+		float spotAttenuation = max(0.0, dot(-v_s, u_spotDirection) / (length_s * length(u_spotDirection)));
+		spotAttenuation = pow(spotAttenuation, u_spotExponent);
+		attenuation *= spotAttenuation;
 	}
+	attenuation *= 1.0 / (u_constantAttenuation + length_s * u_linearAttenuation + pow(length_s, 2.0) * u_quadraticAttenuation);
+		
+	vec4 light1CalcColor = attenuation * (diffuseColor + specularColor);
+
 	// end for each light
 	
-	vec4 finalObjectColor = u_globalAmbient * materialDiffuse + totalFragColor;
+	vec4 finalObjectColor = u_globalAmbient * materialDiffuse + materialEmission + light1CalcColor;
 
 	//FOG stuff
 	if(v_distance < u_fogStart)

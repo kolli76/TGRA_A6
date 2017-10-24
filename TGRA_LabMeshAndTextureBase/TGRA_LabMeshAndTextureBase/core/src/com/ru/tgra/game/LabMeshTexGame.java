@@ -64,23 +64,23 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		shader = new Shader();
 
-		tex = new Texture(Gdx.files.internal("textures/phobos2k.png")); //switch to Fire or Gray for fire/smoke
+		tex = new Texture(Gdx.files.internal("textures/FireGradient01.png")); //switch to Fire or Gray for fire/smoke
 		alphaTex = new Texture(Gdx.files.internal("textures/alphaMap01.png"));
 		particleTex = new Texture(Gdx.files.internal("textures/GrayGradient01.png"));
 
 		model = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		//fire
-	/*	particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
-										120.0f, 1.0f, 0.4f, 0.1f, 0.2f, 0.3f, 
-										tex, particleTex);*/
-		//smoke
 		particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
+										120.0f, 1.0f, 0.4f, 0.1f, 0.2f, 0.3f, 
+										tex, particleTex);
+		//smoke
+	/*	particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
 				20.0f, 10.0f, 2.8f, 2.0f, 2.2f, 0.3f, 
 				tex, particleTex);
 		
 		particleEffect.fadeInTime = 5.0f;
 		particleEffect.fadeOutTime = 5.0f;
-		particleEffect.setParticleLifeTime(15.0f);
+		particleEffect.setParticleLifeTime(15.0f);*/
 
 		BoxGraphic.create();
 		SphereGraphic.create();
@@ -112,6 +112,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 		
 		ArrayList<Point3D> controlPoints = new ArrayList<Point3D>();
+		/*
 		controlPoints.add(new Point3D(0.4f, 2.0f, 1.0f));
 		controlPoints.add(new Point3D(2.7f, 5.0f, 0.2f));
 		controlPoints.add(new Point3D(3.5f, 2.0f, 0.9f));
@@ -128,6 +129,23 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		controlPoints.add(new Point3D(2.0f, -2.0f, 6.0f));
 		controlPoints.add(new Point3D(4.0f, 1.0f, 6.0f));
 		controlPoints.add(new Point3D(6.0f, 3.0f, 6.0f));
+		*/
+		controlPoints.add(new Point3D(0.4f, 0.0f, 1.0f));
+		controlPoints.add(new Point3D(2.7f, 0.0f, 0.2f));
+		controlPoints.add(new Point3D(3.5f, 0.0f, 0.9f));
+		controlPoints.add(new Point3D(6.8f, 0.0f, 0.0f));
+		controlPoints.add(new Point3D(0.0f, 0.0f, 2.0f));
+		controlPoints.add(new Point3D(2.3f, 0.0f, 2.0f));
+		controlPoints.add(new Point3D(4.0f, 0.0f, 2.5f));
+		controlPoints.add(new Point3D(6.9f, 0.0f, 2.0f));
+		controlPoints.add(new Point3D(0.0f, 0.0f, 4.4f));
+		controlPoints.add(new Point3D(2.2f, 0.0f, 4.0f));
+		controlPoints.add(new Point3D(4.0f, 0.0f, 4.0f));
+		controlPoints.add(new Point3D(6.0f, 0.0f, 4.8f));
+		controlPoints.add(new Point3D(0.5f, 0.0f, 6.0f));
+		controlPoints.add(new Point3D(2.0f, 0.0f, 6.0f));
+		controlPoints.add(new Point3D(4.0f, 0.0f, 6.0f));
+		controlPoints.add(new Point3D(6.0f, 0.0f, 6.0f));
 		patch = new BezierPatch(controlPoints);
 	/*	
 		motion = new BezierMotion(new Point3D(-1,4,-1), new Point3D(1,6,1), 
@@ -187,10 +205,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			//cam.rotateY(-90.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			cam.pitch(-90.0f * deltaTime);
+			cam.pitch(90.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			cam.pitch(90.0f * deltaTime);
+			cam.pitch(-90.0f * deltaTime);
 		}
 
 		if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
@@ -214,7 +232,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		}
 
 		//do all updates to the game
-		motion.getCurrentPosition(currentTime, modelPosition);
+		//motion.getCurrentPosition(currentTime, modelPosition);
 		particleEffect.update(deltaTime);
 	}
 	
@@ -246,8 +264,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				
 				shader.setFogStart(0.0f);
 				shader.setFogEnd(20.0f);
-				shader.setFogColor(0.7f, 0.7f, 0.7f, 1.0f);
-				Gdx.gl.glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
@@ -276,7 +294,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 			ModelMatrix.main.loadIdentityMatrix();
 			
-			//patch.draw(shader);
+			//patch.draw(shader, tex);
 
 			drawPyramids();
 
@@ -293,15 +311,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
 			float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
 
-			shader.setSpotDirection(0, s2, -0.3f, c2, 0.0f);
+			shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
 			//shader.setSpotDirection(-cam.n.x, -cam.n.y, -cam.n.z, 0.0f);
-			shader.setSpotExponent(0, 0.0f);
-			shader.setConstantAttenuation(0, 1.0f);
-			shader.setLinearAttenuation(0, 0.00f);
-			shader.setQuadraticAttenuation(0, 0.00f);
+			shader.setSpotExponent(0.0f);
+			shader.setConstantAttenuation(1.0f);
+			shader.setLinearAttenuation(0.00f);
+			shader.setQuadraticAttenuation(0.00f);
 
 			//shader.setLightColor(s2, 0.4f, c2, 1.0f);
-			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
+			shader.setLightColor(1.0f, 1.0f, 1.0f, 1.0f);
 			
 			shader.setGlobalAmbient(0.3f, 0.3f, 0.3f, 1);
 
@@ -309,7 +327,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
 			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(1, 1, 1, 1);
+			shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
 			shader.setShininess(50.0f);
 
 			ModelMatrix.main.pushMatrix();
@@ -318,11 +336,11 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 
-			//BoxGraphic.drawSolidCube(shader, tex);
+			//BoxGraphic.drawSolidCube(shader, null, null);
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			//model.draw(shader, tex);
+			//model.draw(shader, particleTex);
 			//SpriteGraphic.drawSprite(shader, tex, particleTex);
-			//particleEffect.draw(shader);
+			particleEffect.draw(shader);
 			
 			ModelMatrix.main.popMatrix();
 	

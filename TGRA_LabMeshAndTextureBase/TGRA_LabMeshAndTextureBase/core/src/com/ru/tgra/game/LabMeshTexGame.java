@@ -44,7 +44,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	MeshModel model4;
 	MeshModel model5;
 	
-	ParticleEffect particleEffect;
+	ParticleEffect particleEffect1;
+	ParticleEffect particleEffect2;
 	
 	//BezierMotion motion;
 	BSplineMotion motion;
@@ -79,8 +80,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tex4 = new Texture(Gdx.files.internal("textures/pinkMarble01.png")); 
 		tex5 = new Texture(Gdx.files.internal("textures/slate01.png"));
 		tex6 = new Texture(Gdx.files.internal("textures/phobos2k.png"));
-		alphaTex = new Texture(Gdx.files.internal("textures/bubble02.png"));
-		particleTex = new Texture(Gdx.files.internal("textures/bubble01.png"));
+		alphaTex = new Texture(Gdx.files.internal("textures/bubble01.png"));    //bubble 02 eða 01 eða 01 eða 01
+		particleTex = new Texture(Gdx.files.internal("textures/bubble02.png")); //bubble 01 eða 02 eða 03 eða 04
 
 		model = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model2 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
@@ -88,8 +89,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		model4 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model5 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		//bubbles
-		particleEffect = new ParticleEffect(new Point3D(5,0,5), 
-				20.0f, 2.0f, 0.2f, 0.1f, 0.2f, 0.3f, 
+		float smallBubble = 0.1f;
+		float mediumBubble = 0.2f;
+		particleEffect1 = new ParticleEffect(new Point3D(5,0,5), 
+				15.0f, 1.3f, mediumBubble, 0.1f, 0.2f, 0.4f, 
+				particleTex, alphaTex);
+		particleEffect2 = new ParticleEffect(new Point3D(5,0,5), 
+				15.0f, 1.3f, smallBubble, 0.1f, 0.2f, 0.4f, 
 				particleTex, alphaTex);
 		
 		//fire
@@ -256,7 +262,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		//do all updates to the game
 		//motion.getCurrentPosition(currentTime, modelPosition);
-		particleEffect.update(deltaTime);
+		particleEffect1.update(deltaTime);
+		particleEffect2.update(deltaTime);
 	}
 	
 	private void display()
@@ -495,7 +502,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			//SphereGraphic.drawSolidSphere(shader, tex, null);
 			//model.draw(shader, particleTex);
 			//SpriteGraphic.drawSprite(shader, tex, particleTex);
-			particleEffect.draw(shader);
+			particleEffect1.draw(shader);
+			particleEffect2.draw(shader);
 			
 			ModelMatrix.main.popMatrix();
 			

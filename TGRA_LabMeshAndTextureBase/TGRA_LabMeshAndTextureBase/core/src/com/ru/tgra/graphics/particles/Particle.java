@@ -60,8 +60,8 @@ public class Particle {
 			alpha = maxAlpha; //between fade in and fade out
 		}
 		//this should not be in here, comment out for smoke. We should set this somewhere else and call it speedchange, speed gravity or speed gradient
-		speed.x -= originalSpeed.x * 1.8 * deltaTime;
-		speed.z -= originalSpeed.z * 1.8 * deltaTime;
+		speed.x -= originalSpeed.x * 1.3 * deltaTime;
+		speed.z -= originalSpeed.z * 1.3 * deltaTime;
 		
 		lifeTime += deltaTime;
 	}

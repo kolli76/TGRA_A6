@@ -74,11 +74,12 @@ public class ParticleEffect {
 		while(deltaTime >= particleInterval)
 		{																					//-0.5f for smoke, +0.5f for fire, +1.5 for bubbles
 			Vector3D particleSpeed = new Vector3D(rand.nextFloat() - 0.5f, rand.nextFloat() + 1.5f, rand.nextFloat() - 0.5f);
-			particleSpeed.scale(0.6f); //slow down for smoke 0.2f, comment out for fire, 0.6 for bubbles
+			//particleSpeed.scale(0.09f); //slow down for smoke 0.2f, comment out for fire, 0.6 for bubbles
 			//randomize where we generate for smoke, for fire only pos.xyz
 			Particle particle = new Particle(new Point3D(position.x /*+ rand.nextFloat() - 0.5f*/, position.y/* + rand.nextFloat() - 0.5f*/, position.z/* + rand.nextFloat() - 0.5f*/), 
 					particleSpeed, particleSize, particleLifeTime, fadeInTime, fadeOutTime, maxAlpha,
 					emissionTexture, alphaTexture);
+			
 			particle.update(deltaTime);
 			particles.add(particle);
 			

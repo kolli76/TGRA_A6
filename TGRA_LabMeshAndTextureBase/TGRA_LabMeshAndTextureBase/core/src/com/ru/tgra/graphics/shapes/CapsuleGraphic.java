@@ -139,6 +139,11 @@ public class CapsuleGraphic {
 
 	public static void drawSolidCapsule(Shader shader, Texture diffuseTexture, Texture alphaTexture/*, Texture specularTexture*/) {
 
+		if(shader == null)
+		{
+			System.out.println("error");
+		}
+		
 		shader.setDiffuseTexture(diffuseTexture);
 		shader.setAlphaTexture(alphaTexture);
 

@@ -27,7 +27,7 @@ public class CylinderGraphic {
 		
 		float sliceInterval = 2.0f*(float)Math.PI / (float)slices;
 		float sliceAngle;
-
+		
 		for(int sliceCount = 0; sliceCount < slices+1; sliceCount++)
 		{
 			sliceAngle = sliceCount * sliceInterval; //latetude lines of globe
@@ -56,6 +56,7 @@ public class CylinderGraphic {
 			vertexCount += 2;
 		}
 		
+		
 			for(int sliceCount = 0; sliceCount < slices+1; sliceCount++)
 			{
 				sliceAngle = sliceCount * sliceInterval; //latetude lines of globe
@@ -79,38 +80,64 @@ public class CylinderGraphic {
 				normalArray[vertexCount*3 + 2] = (float)Math.sin(sliceAngle);
 					
 				uvArray[vertexCount*2 + 2] = (float)(sliceCount) / (float)(slices);
-				uvArray[vertexCount*2 + 3] = (float)(0.75f) / (float)(1);
+				uvArray[vertexCount*2 + 3] = (float)(1.0f) / (float)(1);
 										
 				vertexCount += 2;
 			}
 			
-			for(int sliceCount = 0; sliceCount < slices+1; sliceCount++)
-			{
-				sliceAngle = sliceCount * sliceInterval; //latetude lines of globe
-				array[vertexCount*3] = 	 (float)Math.cos(sliceAngle);
-				array[vertexCount*3 + 1] = -0.5f;
-				array[vertexCount*3 + 2] = (float)Math.sin(sliceAngle);
-				
-				normalArray[vertexCount*3] = 	 0.0f;
-				normalArray[vertexCount*3 + 1] = -1.0f;
-				normalArray[vertexCount*3 + 2] = 0.0f;
+		for(int sliceCount = 0; sliceCount < slices+1; sliceCount++)
+		{
+			/*
+			sliceAngle = sliceCount * sliceInterval; //latetude lines of globe
+			array[vertexCount*3] = 	 (float)Math.cos(sliceAngle);
+			array[vertexCount*3 + 1] = -0.5f;
+			array[vertexCount*3 + 2] = (float)Math.sin(sliceAngle);
+			
+			normalArray[vertexCount*3] = 	 0.0f;
+			normalArray[vertexCount*3 + 1] = -1.0f;
+			normalArray[vertexCount*3 + 2] = 0.0f;
 
-				uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
-				uvArray[vertexCount*2 + 1] = (float)(0.75f) / (float)(1);
+			uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
+			uvArray[vertexCount*2 + 1] = (float)(0.75f) / (float)(1);
+			
+			array[vertexCount*3 + 3] = (float)Math.cos(sliceAngle);
+			array[vertexCount*3 + 4] = -0.5f;
+			array[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
+			
+			normalArray[vertexCount*3] = 	 0.0f;
+			normalArray[vertexCount*3 + 1] = -1.0f;
+			normalArray[vertexCount*3 + 2] = 0.0f;
 				
-				array[vertexCount*3 + 3] = (float)Math.cos(sliceAngle);
-				array[vertexCount*3 + 4] = -0.5f;
-				array[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
-				
-				normalArray[vertexCount*3] = 	 0.0f;
-				normalArray[vertexCount*3 + 1] = -1.0f;
-				normalArray[vertexCount*3 + 2] = 0.0f;
-					
-				uvArray[vertexCount*2 + 2] = (float)(sliceCount) / (float)(slices);
-				uvArray[vertexCount*2 + 3] = (float)(1.0f) / (float)(1);
-										
-				vertexCount += 2;
-			}	
+			uvArray[vertexCount*2 + 2] = (float)(sliceCount) / (float)(slices);
+			uvArray[vertexCount*2 + 3] = (float)(1.0f) / (float)(1);
+									
+			vertexCount += 2;
+			*/
+			sliceAngle = sliceCount * sliceInterval; //latetude lines of globe
+			array[vertexCount*3] = 	 0.0f;
+			array[vertexCount*3 + 1] = -0.5f;
+			array[vertexCount*3 + 2] = 0.0f;
+			
+			normalArray[vertexCount*3] = 	 0.0f;
+			normalArray[vertexCount*3 + 1] = -1.0f;
+			normalArray[vertexCount*3 + 2] = 0.0f;
+
+			uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
+			uvArray[vertexCount*2 + 1] = (float)(0.0f) / (float)(1);
+			
+			array[vertexCount*3 + 3] = 	 (float)Math.cos(sliceAngle);
+			array[vertexCount*3 + 4] = -0.5f;
+			array[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
+			
+			normalArray[vertexCount*3 + 3] = 0.0f;
+			normalArray[vertexCount*3 + 4] = -1.0f;
+			normalArray[vertexCount*3 + 5] = 0.0f;
+
+			uvArray[vertexCount*2 + 2] = (float)sliceCount / (float)(slices);
+			uvArray[vertexCount*2 + 3] = (float)(0.25f) / (float)(1);
+									
+			vertexCount += 2;
+		}	
 		
 		vertexBuffer = BufferUtils.newFloatBuffer(vertexCount*3);
 		vertexBuffer.put(array);

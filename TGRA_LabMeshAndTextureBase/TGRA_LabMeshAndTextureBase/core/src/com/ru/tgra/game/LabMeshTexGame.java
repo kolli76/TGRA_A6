@@ -60,6 +60,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private Texture alphaTex;
 	private Texture particleTex;
 	
+	private Octopus Otto;
+	
 	Random rand = new Random();
 	
 	BezierPatch patch;
@@ -114,6 +116,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		BoxGraphic.create();
 		SphereGraphic.create();
 		SpriteGraphic.create();
+		TorusGraphic.create(1.0f);
+		CapsuleGraphic.create(1.0f);
+		CylinderGraphic.create();
+		
 
 		ModelMatrix.main = new ModelMatrix();
 		ModelMatrix.main.loadIdentityMatrix();
@@ -183,6 +189,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		motion = new BSplineMotion(controlPoints, 1.0f, 20.0f);
 		modelPosition = new Point3D();
+		
+		Otto = new Octopus(new Point3D(-5,0,-5));
 	}
 
 	private void input()
@@ -325,6 +333,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			ModelMatrix.main.loadIdentityMatrix();
 			
 			patch.draw(shader, tex);
+			
+
+			Otto.draw(shader, null, null);
 
 			//drawPyramids();
 

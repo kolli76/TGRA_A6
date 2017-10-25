@@ -14,26 +14,35 @@ public class Segment {
 	Point3D pointB;
 	//Segment child;
 	Segment parent;
+	Segment child;
 	
 	float length;
 	
 	// Going to use spherical coordinate system
 	float polarAngle;
 	float azimuthAngle;
-	float maxAngle;
+	
 	
 	public Segment(Point3D pos, float length, Segment parent)
 	{
 		polarAngle = (float) (Math.PI/4);
 		azimuthAngle = (float) (Math.PI/4);
-		//maxAngle = 0.1f;
 		this.length = length;
 		
 		this.pointA = pos;
 		this.parent = parent;
+		this.child = null;
+		setParentage();
 		calculateB();
-		//System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
-		//System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
+		
+	}
+	
+	private void setParentage()
+	{
+		if(parent != null)
+		{
+			this.parent.child = this;
+		}
 	}
 	
 	private void calculateB()
@@ -45,18 +54,10 @@ public class Segment {
 		pointB = new Point3D(pointA.x + dx, pointA.y + dy, pointA.z + dz);
 	}
 	
-	public void updateSegment()
+	public void follow(Point3D target)
 	{
-		calculateB();
-	}
-	
-	public void follow(Point3D point)
-	{
-		//Vector3D target = new Vector3D(point.x, point.y, point.z);
-		Vector3D dir = pointA.to(point);
-		
+		Vector3D dir = pointA.to(target);	
 		polarAngle = (float) (Math.acos(dir.y/dir.length()));
-		
 		if (dir.x < 0) 
 		{
 			azimuthAngle = (float) (Math.atan(dir.z/dir.x) + Math.PI);
@@ -65,7 +66,6 @@ public class Segment {
 		{
 			azimuthAngle = (float) (Math.atan(dir.z/dir.x));
 		}
-		//System.out.println( "angle "+ azimuthAngle);
 		
 		float dx = (float) (length * Math.sin(polarAngle) * Math.cos(azimuthAngle));
 		float dy = (float) (length * Math.cos(polarAngle));
@@ -73,20 +73,79 @@ public class Segment {
 		
 		Vector3D movementA = new Vector3D(dx,dy,dz);
 		movementA.scale(this.length);
-		pointA.set(point.x - movementA.x, point.y - movementA.y, point.z - movementA.z);
-		pointB.set(point.x, point.y, point.z);
+		pointA.set(target.x - movementA.x, target.y - movementA.y, target.z - movementA.z);
+		pointB.set(target.x, target.y, target.z);
 		
 		if(this.parent != null)
 		{
 			this.parent.follow(pointA);
 		}
-
-		
-		//System.out.println(pointA.x + " " +pointA.y + " " +pointA.z + " ");
-		//System.out.println(pointB.x + " " +pointB.y + " " +pointB.z + " ");
 	}
 
+	public void anchor(Point3D anchor)
+	{
+		pointA.set(anchor.x, anchor.y, anchor.z);
+		calculateB();
+		
+		if(this.child != null)
+		{
+			this.child.anchor(this.pointB);
+		}
+	}
+	
 	public void drawSegment(Shader shader)
+	{
+
+		shader.setMaterialDiffuse(0.5f, 0.3f, 1.0f, 0.8f);
+		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+		shader.setShininess(150.0f);
+		shader.setMaterialEmission(0, 0, 0, 1);
+		
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation((pointB.x+pointA.x)/2, (pointB.y+pointA.y)/2, (pointB.z+pointA.z)/2);
+		
+		Vector3D temp = pointA.to(pointB);
+		temp.normalize();
+		Vector3D rotationVector = temp.cross(new Vector3D(0,-1,0));
+		float angle = (float) Math.acos(temp.y);
+		angle = (float) (angle * 180.0f / Math.PI);
+		ModelMatrix.main.addRotation(angle, rotationVector);
+
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		CapsuleGraphic.drawSolidCapsule(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+	}
+	
+	public void drawSegment(Shader shader, float width)
+	{
+
+		shader.setMaterialDiffuse(0.5f, 0.3f, 1.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setShininess(1.0f);
+		shader.setMaterialEmission(0, 0, 0, 1);
+		
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation((pointB.x+pointA.x)/2, (pointB.y+pointA.y)/2, (pointB.z+pointA.z)/2);
+		
+		Vector3D temp = pointA.to(pointB);
+		temp.normalize();
+		Vector3D rotationVector = temp.cross(new Vector3D(0,-1,0));
+		float angle = (float) Math.acos(temp.y);
+		angle = (float) (angle * 180.0f / Math.PI);
+		ModelMatrix.main.addRotation(angle, rotationVector);
+
+		
+		ModelMatrix.main.addScale(width, 0.5f, width);
+		
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		CapsuleGraphic.drawSolidCapsule(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+	}
+	
+	
+	public void drawSegmentBone(Shader shader)
 	{
 
 		
@@ -94,16 +153,6 @@ public class Segment {
 		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 		shader.setShininess(150.0f);
 		shader.setMaterialEmission(0, 0, 0, 1);
-		
-		ModelMatrix.main.pushMatrix();
-		
-		ModelMatrix.main.addTranslation(pointB.x, pointB.y, pointB.z);
-		ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
-		shader.setModelMatrix(ModelMatrix.main.getMatrix());
-		SphereGraphic.drawSolidSphere(shader, null, null);
-		
-		ModelMatrix.main.popMatrix();
-		
 		
 		ModelMatrix.main.pushMatrix();
 		
@@ -126,10 +175,9 @@ public class Segment {
 		ModelMatrix.main.addRotation(angle, rotationVector);
 
 		
-		ModelMatrix.main.addScale(0.2f, 1, 0.2f);
+		ModelMatrix.main.addScale(0.2f, this.length, 0.2f);
 		
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
-		//CapsuleGraphic.drawSolidCapsule(shader, null, null);
 		BoxGraphic.drawSolidCube(shader, null, null);
 		
 		ModelMatrix.main.popMatrix();

@@ -28,13 +28,20 @@ public class Octopus {
 		SphereGraphic.drawSolidSphere(shader, diffuseTexture, alphaTexture);
 		
 		{// Eye
+			float radius = 0.93f;
+			float azimuth = (float) (50.0f/180*Math.PI);
+			float polar = (float) (70.0f/180.0f*Math.PI);
+			float dx = radius*(float)Math.sin(polar) * (float)Math.cos(azimuth);
+			float dy = radius*(float)Math.cos(polar);
+			float dz = radius*(float)Math.sin(polar) * (float)Math.sin(azimuth);
+			
 			ModelMatrix.main.pushMatrix();
 			
 			shader.setMaterialDiffuse(0.2f, 0.0f, 0.0f, 1.0f);
 			shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 			shader.setShininess(20.0f);
 			
-			ModelMatrix.main.addTranslation(-0.5f, 0, 0.8f);
+			ModelMatrix.main.addTranslation(dx, dy, dz);
 			ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
 			
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
@@ -44,13 +51,20 @@ public class Octopus {
 		}
 		
 		{// Eye
+			float radius = 0.93f;
+			float azimuth = (float) (130.0f/180*Math.PI);
+			float polar = (float) (70.0f/180.0f*Math.PI);
+			float dx = radius*(float)Math.sin(polar) * (float)Math.cos(azimuth);
+			float dy = radius*(float)Math.cos(polar);
+			float dz = radius*(float)Math.sin(polar) * (float)Math.sin(azimuth);
+			
 			ModelMatrix.main.pushMatrix();
 			
 			shader.setMaterialDiffuse(0.2f, 0.0f, 0.0f, 1.0f);
 			shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 			shader.setShininess(20.0f);
 			
-			ModelMatrix.main.addTranslation(0.5f, 0, 0.8f);
+			ModelMatrix.main.addTranslation(dx, dy, dz);
 			ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
 			
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
@@ -60,15 +74,23 @@ public class Octopus {
 		}
 		
 		{// Mouth
+			
+			float azimuth = (float) (Math.PI/2);
+			float polar = (float) (120.0f/180.0f*Math.PI);
+			float radius = 1.0f;
+			float dx = radius*(float)Math.sin(polar) * (float)Math.cos(azimuth);
+			float dy = radius*(float)Math.cos(polar);
+			float dz = radius*(float)Math.sin(polar) * (float)Math.sin(azimuth);
+			
 			ModelMatrix.main.pushMatrix();
 			
 			shader.setMaterialDiffuse(1.0f, 0.1f, 0.1f, 1.0f);
 			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 			shader.setShininess(1.0f);
 			
-			ModelMatrix.main.addTranslation(0.0f, -0.5f, 0.8f);
-			ModelMatrix.main.addRotationX(135.0f);
-			ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
+			ModelMatrix.main.addTranslation(dx, dy, dz);
+			ModelMatrix.main.addRotationX((float)(polar*180/Math.PI));
+			ModelMatrix.main.addScale(0.18f, 0.18f, 0.18f);
 			
 			shader.setModelMatrix(ModelMatrix.main.getMatrix());
 			TorusGraphic.drawSolidTorus(shader, diffuseTexture, alphaTexture);

@@ -42,9 +42,9 @@ public class CylinderGraphic {
 			uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
 			uvArray[vertexCount*2 + 1] = (float)(0.0f) / (float)(1);
 			
-			array[vertexCount*3 + 3] = 	 (float)Math.cos(sliceAngle);
+			array[vertexCount*3 + 3] = 	 0.5f*(float)Math.cos(sliceAngle);
 			array[vertexCount*3 + 4] = 0.5f;
-			array[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
+			array[vertexCount*3 + 5] = 0.5f*(float)Math.sin(sliceAngle);
 			
 			normalArray[vertexCount*3 + 3] = 0.0f;
 			normalArray[vertexCount*3 + 4] = 1.0f;
@@ -60,9 +60,9 @@ public class CylinderGraphic {
 			for(int sliceCount = 0; sliceCount < slices+1; sliceCount++)
 			{
 				sliceAngle = sliceCount * sliceInterval; //latetude lines of globe
-				array[vertexCount*3] = 	 (float)Math.cos(sliceAngle);
+				array[vertexCount*3] = 	 0.5f*(float)Math.cos(sliceAngle);
 				array[vertexCount*3 + 1] = 0.5f;
-				array[vertexCount*3 + 2] = (float)Math.sin(sliceAngle);
+				array[vertexCount*3 + 2] = 0.5f*(float)Math.sin(sliceAngle);
 				
 				normalArray[vertexCount*3] = 	 (float)Math.cos(sliceAngle);
 				normalArray[vertexCount*3 + 1] = 0.0f;
@@ -71,13 +71,13 @@ public class CylinderGraphic {
 				uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
 				uvArray[vertexCount*2 + 1] = (float)(0.25f) / (float)(1);
 				
-				array[vertexCount*3 + 3] = (float)Math.cos(sliceAngle);
+				array[vertexCount*3 + 3] = 0.5f*(float)Math.cos(sliceAngle);
 				array[vertexCount*3 + 4] = -0.5f;
-				array[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
+				array[vertexCount*3 + 5] = 0.5f*(float)Math.sin(sliceAngle);
 				
-				normalArray[vertexCount*3] = 	 (float)Math.cos(sliceAngle);
-				normalArray[vertexCount*3 + 1] = 0.0f;
-				normalArray[vertexCount*3 + 2] = (float)Math.sin(sliceAngle);
+				normalArray[vertexCount*3 + 3] = (float)Math.cos(sliceAngle);
+				normalArray[vertexCount*3 + 4] = 0.0f;
+				normalArray[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
 					
 				uvArray[vertexCount*2 + 2] = (float)(sliceCount) / (float)(slices);
 				uvArray[vertexCount*2 + 3] = (float)(1.0f) / (float)(1);
@@ -125,9 +125,9 @@ public class CylinderGraphic {
 			uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
 			uvArray[vertexCount*2 + 1] = (float)(0.0f) / (float)(1);
 			
-			array[vertexCount*3 + 3] = 	 (float)Math.cos(sliceAngle);
+			array[vertexCount*3 + 3] = 	 0.5f*(float)Math.cos(sliceAngle);
 			array[vertexCount*3 + 4] = -0.5f;
-			array[vertexCount*3 + 5] = (float)Math.sin(sliceAngle);
+			array[vertexCount*3 + 5] = 0.5f*(float)Math.sin(sliceAngle);
 			
 			normalArray[vertexCount*3 + 3] = 0.0f;
 			normalArray[vertexCount*3 + 4] = -1.0f;
@@ -163,8 +163,23 @@ public class CylinderGraphic {
 		{
 			Gdx.gl.glDrawArrays(GL20.GL_TRIANGLE_STRIP, i, (slices+1)*2);
 		}
-
-
 	}
+	
+	public static void drawHollowCylinder(Shader shader, Texture diffuseTexture, Texture alphaTexture/*, Texture specularTexture*/) {
+
+		shader.setDiffuseTexture(diffuseTexture);
+		shader.setAlphaTexture(alphaTexture);
+
+		Gdx.gl.glVertexAttribPointer(shader.getVertexPointer(), 3, GL20.GL_FLOAT, false, 0, vertexBuffer);
+		Gdx.gl.glVertexAttribPointer(shader.getNormalPointer(), 3, GL20.GL_FLOAT, false, 0, normalBuffer);
+		Gdx.gl.glVertexAttribPointer(shader.getUVPointer(), 2, GL20.GL_FLOAT, false, 0, uvBuffer);
+
+		for(int i = (slices+1)*2; i < vertexCount-(slices+1)*2; i += (slices+1)*2)
+		{
+			Gdx.gl.glDrawArrays(GL20.GL_TRIANGLE_STRIP, i, (slices+1)*2);
+		}
+	}
+	
+	
 
 }

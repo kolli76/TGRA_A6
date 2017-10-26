@@ -24,6 +24,7 @@ public class SphereGraphic {
 
 		vertexCount = 0;
 		float[] array = new float[(stacks)*(slices+1)*6];
+		float[] normalArray = new float[(stacks)*(slices+1)*6];
 		float[] uvArray = new float[(stacks)*(slices+1)*4]; //  2/3 of the size
 		
 		float stackInterval = (float)Math.PI / (float)stacks;
@@ -38,6 +39,10 @@ public class SphereGraphic {
 				array[vertexCount*3] = 	 (float)Math.sin(stackAngle) * (float)Math.cos(sliceAngle);
 				array[vertexCount*3 + 1] = (float)Math.cos(stackAngle);
 				array[vertexCount*3 + 2] = (float)Math.sin(stackAngle) * (float)Math.sin(sliceAngle);
+				
+				normalArray[vertexCount*3] = 	 (float)Math.sin(stackAngle) * (float)Math.cos(sliceAngle);
+				normalArray[vertexCount*3 + 1] = (float)Math.cos(stackAngle);
+				normalArray[vertexCount*3 + 2] = (float)Math.sin(stackAngle) * (float)Math.sin(sliceAngle);
 
 				uvArray[vertexCount*2] = (float)sliceCount / (float)(slices);
 				uvArray[vertexCount*2 + 1] = (float)stackCount / (float)(stacks);
@@ -45,7 +50,12 @@ public class SphereGraphic {
 				array[vertexCount*3 + 3] = (float)Math.sin(stackAngle + stackInterval) * (float)Math.cos(sliceAngle);
 				array[vertexCount*3 + 4] = (float)Math.cos(stackAngle + stackInterval);
 				array[vertexCount*3 + 5] = (float)Math.sin(stackAngle + stackInterval) * (float)Math.sin(sliceAngle);
-					
+				
+				normalArray[vertexCount*3 + 3] = (float)Math.sin(stackAngle + stackInterval) * (float)Math.cos(sliceAngle);
+				normalArray[vertexCount*3 + 4] = (float)Math.cos(stackAngle + stackInterval);
+				normalArray[vertexCount*3 + 5] = (float)Math.sin(stackAngle + stackInterval) * (float)Math.sin(sliceAngle);
+				
+				
 				uvArray[vertexCount*2 + 2] = (float)(sliceCount) / (float)(slices);
 				uvArray[vertexCount*2 + 3] = (float)(stackCount + 1) / (float)(stacks);
 										
@@ -56,7 +66,7 @@ public class SphereGraphic {
 		vertexBuffer.put(array);
 		vertexBuffer.rewind();
 		normalBuffer = BufferUtils.newFloatBuffer(vertexCount*3);
-		normalBuffer.put(array);
+		normalBuffer.put(normalArray);
 		normalBuffer.rewind();
 		uvBuffer = BufferUtils.newFloatBuffer(vertexCount*2);
 		uvBuffer.put(uvArray);

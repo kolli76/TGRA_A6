@@ -6,6 +6,7 @@ import com.ru.tgra.graphics.Shader;
 import com.ru.tgra.graphics.Vector3D;
 import com.ru.tgra.graphics.shapes.BoxGraphic;
 import com.ru.tgra.graphics.shapes.CapsuleGraphic;
+import com.ru.tgra.graphics.shapes.CylinderGraphic;
 import com.ru.tgra.graphics.shapes.SphereGraphic;
 
 public class Segment {
@@ -34,7 +35,6 @@ public class Segment {
 		this.child = null;
 		setParentage();
 		calculateB();
-		
 	}
 	
 	private void setParentage()
@@ -109,6 +109,35 @@ public class Segment {
 		
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 		CapsuleGraphic.drawSolidCapsule(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+	}
+	
+	public void drawCylinderSegment(Shader shader)
+	{
+		
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation((pointB.x+pointA.x)/2, (pointB.y+pointA.y)/2, (pointB.z+pointA.z)/2);
+		
+		Vector3D temp = pointA.to(pointB);
+		temp.normalize();
+		Vector3D rotationVector = temp.cross(new Vector3D(0,-1,0));
+		float angle = (float) Math.acos(temp.y);
+		angle = (float) (angle * 180.0f / Math.PI);
+		ModelMatrix.main.addRotation(angle, rotationVector);
+		ModelMatrix.main.addScale(length, length, length);
+		
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		CylinderGraphic.drawHollowCylinder(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		ModelMatrix.main.pushMatrix();
+		
+		ModelMatrix.main.addTranslation(pointA.x, pointA.y, pointA.z);
+		ModelMatrix.main.addScale(0.5f*this.length, 0.5f*this.length, 0.5f*this.length);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		SphereGraphic.drawSolidSphere(shader, null, null);
 		
 		ModelMatrix.main.popMatrix();
 	}	

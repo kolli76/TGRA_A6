@@ -44,6 +44,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	MeshModel model3;
 	MeshModel model4;
 	MeshModel model5;
+	MeshModel model6;
 	
 	ParticleEffect particleEffect1;
 	ParticleEffect particleEffect2;
@@ -69,6 +70,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	Random rand = new Random();
 	
 	BezierPatch patch;
+	
 
 	@Override
 	public void create () {
@@ -94,6 +96,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		model3 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model4 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
 		model5 = G3DJModelLoader.loadG3DJFromFile("testBlob.g3dj", true);
+		model6 = G3DJModelLoader.loadG3DJFromFile("Dracena.g3dj", true);
 		//bubbles
 		float smallBubble = 0.1f;
 		float mediumBubble = 0.2f;
@@ -151,24 +154,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 		
 		ArrayList<Point3D> controlPoints = new ArrayList<Point3D>();
-		/*
-		controlPoints.add(new Point3D(0.4f, 2.0f, 1.0f));
-		controlPoints.add(new Point3D(2.7f, 5.0f, 0.2f));
-		controlPoints.add(new Point3D(3.5f, 2.0f, 0.9f));
-		controlPoints.add(new Point3D(6.8f, 7.0f, 0.0f));
-		controlPoints.add(new Point3D(0.0f, 6.0f, 2.0f));
-		controlPoints.add(new Point3D(2.3f, 5.0f, 2.0f));
-		controlPoints.add(new Point3D(4.0f, -2.0f, 2.5f));
-		controlPoints.add(new Point3D(6.9f, -5.0f, 2.0f));
-		controlPoints.add(new Point3D(0.0f, 6.0f, 4.4f));
-		controlPoints.add(new Point3D(2.2f, 2.0f, 4.0f));
-		controlPoints.add(new Point3D(4.0f, 4.0f, 4.0f));
-		controlPoints.add(new Point3D(6.0f, 7.0f, 4.8f));
-		controlPoints.add(new Point3D(0.5f, 4.0f, 6.0f));
-		controlPoints.add(new Point3D(2.0f, -2.0f, 6.0f));
-		controlPoints.add(new Point3D(4.0f, 1.0f, 6.0f));
-		controlPoints.add(new Point3D(6.0f, 3.0f, 6.0f));
-		*/
+		
 		controlPoints.add(new Point3D(0.0f, 0.0f, 0.0f));
 		controlPoints.add(new Point3D(2.0f, 0.0f, 0.0f));
 		controlPoints.add(new Point3D(4.0f, 0.0f, 0.0f));
@@ -196,8 +182,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		tent = new Tentacle(20, 0.1f, new Point3D(-1,0,-1));
 		Otto = new Octopus(new Point3D(-5,0,-5));
-		target = new Point3D (-1,-1,-1);
+		
 		targetAngle = 0;
+		target = new Point3D(0,0,0);
 	}
 
 	private void input()
@@ -320,8 +307,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				
 				shader.setFogStart(0.0f);
 				shader.setFogEnd(20.0f);
-				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				shader.setFogColor(1.0f, 1.0f, 1.0f, 1.0f);
+				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
@@ -352,6 +339,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			
 			patch.draw(shader, tex);
 			
+			
 
 			Otto.draw(shader, null, null);
 			tent.drawTentacle(shader);
@@ -364,15 +352,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			SphereGraphic.drawSolidSphere(shader, null, null);
 			ModelMatrix.main.popMatrix();
 
-			//drawPyramids();
-
-			//ModelMatrix.main.addRotationZ(angle);
-
 			float s = (float)Math.sin((angle / 2.0) * Math.PI / 180.0);
 			float c = (float)Math.cos((angle / 2.0) * Math.PI / 180.0);
 
-			//shader.setLightPosition(0.0f + c * 3.0f, 5.0f, 0.0f + s * 3.0f, 1.0f);
-			//shader.setLightPosition(3.0f, 4.0f, 0.0f, 1.0f);
 			shader.setLightPosition(0, cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
 
 
@@ -380,172 +362,19 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
 
 			shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
-			//shader.setSpotDirection(-cam.n.x, -cam.n.y, -cam.n.z, 0.0f);
 			shader.setSpotExponent(0.0f);
 			shader.setConstantAttenuation(1.0f);
 			shader.setLinearAttenuation(0.00f);
 			shader.setQuadraticAttenuation(0.00f);
-
-			//shader.setLightColor(s2, 0.4f, c2, 1.0f);
 			shader.setLightColor(1.0f, 1.0f, 1.0f, 1.0f);
 			
 			shader.setGlobalAmbient(0.3f, 0.3f, 0.3f, 1);
-
-			//shader.setMaterialDiffuse(s, 0.4f, c, 1.0f);
-			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-			shader.setShininess(5.0f);
-
-			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(4.0f, 0.0f, 4.0f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			ModelMatrix.main.addScale(0.3f, 0.1f, 0.2f);
-			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			//BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			model.draw(shader, tex6);
-			//SpriteGraphic.drawSprite(shader, tex, particleTex);
-			//particleEffect.draw(shader);
+			//draw stones
+			drawStones();
+			//draw fishtank
+			drawFishTank();
 			
-			ModelMatrix.main.popMatrix();
-			
-			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-			shader.setShininess(4.0f);
-
-			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(1.0f, 0.0f, 1.0f);
-			ModelMatrix.main.addScale(0.2f, 0.1f, 0.5f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			//ModelMatrix.main.addRotation(180.0f, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			//BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			model2.draw(shader, tex2);
-			
-			ModelMatrix.main.popMatrix();
-			
-			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-			shader.setShininess(3.0f);
-
-			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(3.0f, 0.0f, 4.0f);
-			ModelMatrix.main.addScale(0.5f, 0.5f, 0.5f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			//BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			model3.draw(shader, tex3);
-			
-			ModelMatrix.main.popMatrix();
-			
-			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-			shader.setShininess(2.0f);
-
-			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(5.0f, 0.0f, 3.0f);
-			ModelMatrix.main.addScale(0.2f, 0.1f, 0.3f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			//BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			model4.draw(shader, tex4);
-			
-			ModelMatrix.main.popMatrix();
-			
-			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-			shader.setShininess(1.0f);
-
-			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(1.0f, 0.0f, 5.0f);
-			ModelMatrix.main.addScale(0.1f, 0.2f, 0.3f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			//BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			model5.draw(shader, tex5);
-			
-	
-			
-			ModelMatrix.main.popMatrix();
-			
-			Gdx.gl.glEnable(GL20.GL_BLEND); //switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
-			//when we put a new pixel we mix the new color in a pixel with old value of pixel
-			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE); //add up colors, the one thats there with the one thats coming in
-			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA); //source color, destination color, traditional transparency
-			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
-			//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
-			shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.5f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 0.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 0);
-			shader.setShininess(10.0f);
-
-			ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(3.0f, 1.4f, 3.0f);
-			ModelMatrix.main.addScale(6.0f, 3.0f, 6.0f);
-			//ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			
-			//particleEffect.draw(shader);
-			ModelMatrix.main.popMatrix();
-			
-			//Gdx.gl.glEnable(GL20.GL_BLEND); //switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
-			//when we put a new pixel we mix the new color in a pixel with old value of pixel
-			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE); //add up colors, the one thats there with the one thats coming in
-			//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA); //source color, destination color, traditional transparency
-			//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
-			//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
-			//shader.setMaterialDiffuse(s, 0.4f, c, 1.0f);
-			shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-			//shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
-			shader.setShininess(5.0f);
-
-			ModelMatrix.main.pushMatrix();
-			//ModelMatrix.main.addTranslation(4.0f, 6.0f, 4.0f);
-			ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
-			//ModelMatrix.main.addScale(1.3f, 0.1f, 0.2f);
-			//ModelMatrix.main.addRotation(angle, new Vector3D(1,1,1));
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-			//BoxGraphic.drawSolidCube(shader, null, null);
-			//SphereGraphic.drawSolidSphere(shader, tex, null);
-			//model.draw(shader, particleTex);
-			//SpriteGraphic.drawSprite(shader, tex, particleTex);
-			particleEffect1.draw(shader);
-			particleEffect2.draw(shader);
-			
-			ModelMatrix.main.popMatrix();
-			
-			
+			tent.drawTentacle(shader);
 	
 			
 		}
@@ -561,65 +390,139 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 	}
 
-	private void drawPyramids()
+	private void drawFishTank()
 	{
-		int maxLevel = 9;
+		Gdx.gl.glEnable(GL20.GL_BLEND); 
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-		for(int pyramidNr = 0; pyramidNr < 2; pyramidNr++)
-		{
-			ModelMatrix.main.pushMatrix();
-			if(pyramidNr == 0)
-			{
-				shader.setMaterialDiffuse(0.8f, 0.8f, 0.2f, 0.3f);
-				shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-				shader.setShininess(150.0f);
-				shader.setMaterialEmission(0, 0, 0, 1);
-				ModelMatrix.main.addTranslation(0.0f, 0.0f, -7.0f);
-			}
-			else
-			{
-				shader.setMaterialDiffuse(0.5f, 0.3f, 1.0f, 0.8f);
-				shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-				shader.setShininess(150.0f);
-				shader.setMaterialEmission(0, 0, 0, 1);
-				ModelMatrix.main.addTranslation(0.0f, 0.0f, 7.0f);
-			}
-			ModelMatrix.main.pushMatrix();
-			for(int level = 0; level < maxLevel; level++)
-			{
-	
-				ModelMatrix.main.addTranslation(0.55f, 1.0f, -0.55f);
-	
-				ModelMatrix.main.pushMatrix();
-				for(int i = 0; i < maxLevel-level; i++)
-				{
-					ModelMatrix.main.addTranslation(1.1f, 0, 0);
-					ModelMatrix.main.pushMatrix();
-					for(int j = 0; j < maxLevel-level; j++)
-					{
-						ModelMatrix.main.addTranslation(0, 0, -1.1f);
-						ModelMatrix.main.pushMatrix();
-						if(i % 2 == 0)
-						{
-							ModelMatrix.main.addScale(0.2f, 1, 1);
-						}
-						else
-						{
-							ModelMatrix.main.addScale(1, 1, 0.2f);
-						}
-						shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.7f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 0.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 0);
+		shader.setShininess(10.0f);
 
-						BoxGraphic.drawSolidCube(shader, null, null);
-						//BoxGraphic.drawSolidCube(shader, tex);
-						ModelMatrix.main.popMatrix();
-					}
-					ModelMatrix.main.popMatrix();
-				}
-				ModelMatrix.main.popMatrix();
-			}
-			ModelMatrix.main.popMatrix();
-			ModelMatrix.main.popMatrix();
-		}
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(3.0f, 1.4f, 3.0f);
+		ModelMatrix.main.addScale(6.0f, 3.0f, 6.0f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+
+		/*shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
+		shader.setShininess(5.0f);*/
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+		particleEffect1.draw(shader);
+		particleEffect2.draw(shader);
+		
+		ModelMatrix.main.popMatrix();
+		Gdx.gl.glEnable(GL20.GL_BLEND); 
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.1f);
+		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(100.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(0.0f, 1.4f, 0.0f);
+		ModelMatrix.main.addScale(6.0f, 3.0f, 0.1f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+	}
+	
+	private void drawStones()
+	{
+		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(5.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(4.0f, 0.0f, 4.0f);
+		ModelMatrix.main.addScale(0.3f, 0.1f, 0.2f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+		model.draw(shader, tex6);
+
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(4.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(1.0f, 0.0f, 1.0f);
+		ModelMatrix.main.addScale(0.2f, 0.1f, 0.5f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		model2.draw(shader, tex2);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(3.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(3.0f, 0.0f, 4.0f);
+		ModelMatrix.main.addScale(0.5f, 0.5f, 0.5f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+		model3.draw(shader, tex3);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(2.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(5.0f, 0.0f, 3.0f);
+		ModelMatrix.main.addScale(0.2f, 0.1f, 0.3f);
+
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+
+		model4.draw(shader, tex4);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(1.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(1.0f, 0.0f, 5.0f);
+		ModelMatrix.main.addScale(0.1f, 0.2f, 0.3f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		model5.draw(shader, tex5);
+
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.0f, 1.0f, 0.f, 1.0f);
+		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(1.0f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(1.0f, 6.0f, 5.0f);
+		ModelMatrix.main.addScale(1.0f, 1.0f, 1.0f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		model6.draw(shader, tex);
+
+		ModelMatrix.main.popMatrix();
 	}
 
 	@Override

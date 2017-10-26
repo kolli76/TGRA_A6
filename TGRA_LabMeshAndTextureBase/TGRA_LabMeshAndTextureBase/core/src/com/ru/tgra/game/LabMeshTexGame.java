@@ -19,6 +19,7 @@ import com.ru.tgra.graphics.*;
 import com.ru.tgra.graphics.motion.BSplineMotion;
 import com.ru.tgra.graphics.motion.BezierMotion;
 import com.ru.tgra.graphics.motion.LinearMotion;
+import com.ru.tgra.graphics.motion.Tentacle;
 import com.ru.tgra.graphics.particles.ParticleEffect;
 import com.ru.tgra.graphics.shapes.*;
 import com.ru.tgra.graphics.shapes.g3djmodel.G3DJModelLoader;
@@ -61,6 +62,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private Texture particleTex;
 	
 	private Octopus Otto;
+	private Tentacle tent;
+	private Point3D target;
+	private float targetAngle;
 	
 	Random rand = new Random();
 	
@@ -190,7 +194,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		motion = new BSplineMotion(controlPoints, 1.0f, 20.0f);
 		modelPosition = new Point3D();
 		
+		tent = new Tentacle(20, 0.1f, new Point3D(-1,0,-1));
 		Otto = new Octopus(new Point3D(-5,0,-5));
+		target = new Point3D (-1,-1,-1);
+		targetAngle = 0;
 	}
 
 	private void input()
@@ -200,6 +207,17 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private void update()
 	{
 		float deltaTime = Gdx.graphics.getDeltaTime(); //gives time between frames
+		
+		targetAngle += 0.3f * deltaTime;
+		
+		float dx = (float) Math.cos(targetAngle);
+		float dy = (float) Math.sin(targetAngle);
+		float dz = (float) Math.sin(targetAngle);
+		target.set(dx, dy, dz);
+		
+		//tent.follow(target);
+		tent.reach(target);
+		
 		if(firstFrame)
 		{
 			currentTime = 0.0f;
@@ -336,6 +354,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			
 
 			Otto.draw(shader, null, null);
+			tent.drawTentacle(shader);
+			//tent.drawTentacleSkeleton(shader);
+			
+			ModelMatrix.main.pushMatrix();
+			ModelMatrix.main.addTranslation(target.x, target.y, target.z);
+			ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
+			shader.setModelMatrix(ModelMatrix.main.getMatrix());
+			SphereGraphic.drawSolidSphere(shader, null, null);
+			ModelMatrix.main.popMatrix();
 
 			//drawPyramids();
 

@@ -44,7 +44,7 @@ public class Tentacle {
 	{
 		for (int i = 0; i < segmentNum; i++)
 		{
-			segments[i].drawSegment(shader, 0.5f - 0.05f*i);
+			segments[i].drawSegment(shader);
 		}
 	}
 	

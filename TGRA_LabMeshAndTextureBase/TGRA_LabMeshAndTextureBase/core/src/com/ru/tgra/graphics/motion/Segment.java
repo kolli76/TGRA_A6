@@ -67,9 +67,9 @@ public class Segment {
 			azimuthAngle = (float) (Math.atan(dir.z/dir.x));
 		}
 		
-		float dx = (float) (length * Math.sin(polarAngle) * Math.cos(azimuthAngle));
-		float dy = (float) (length * Math.cos(polarAngle));
-		float dz = (float) (length * Math.sin(polarAngle) * Math.sin(azimuthAngle));
+		float dx = (float) (Math.sin(polarAngle) * Math.cos(azimuthAngle));
+		float dy = (float) (Math.cos(polarAngle));
+		float dz = (float) (Math.sin(polarAngle) * Math.sin(azimuthAngle));
 		
 		Vector3D movementA = new Vector3D(dx,dy,dz);
 		movementA.scale(this.length);
@@ -95,11 +95,6 @@ public class Segment {
 	
 	public void drawSegment(Shader shader)
 	{
-
-		shader.setMaterialDiffuse(0.5f, 0.3f, 1.0f, 0.8f);
-		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-		shader.setShininess(150.0f);
-		shader.setMaterialEmission(0, 0, 0, 1);
 		
 		ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation((pointB.x+pointA.x)/2, (pointB.y+pointA.y)/2, (pointB.z+pointA.z)/2);
@@ -110,46 +105,19 @@ public class Segment {
 		float angle = (float) Math.acos(temp.y);
 		angle = (float) (angle * 180.0f / Math.PI);
 		ModelMatrix.main.addRotation(angle, rotationVector);
-
-		shader.setModelMatrix(ModelMatrix.main.getMatrix());
-		CapsuleGraphic.drawSolidCapsule(shader, null, null);
-		
-		ModelMatrix.main.popMatrix();
-	}
-	
-	public void drawSegment(Shader shader, float width)
-	{
-
-		shader.setMaterialDiffuse(0.5f, 0.3f, 1.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setShininess(1.0f);
-		shader.setMaterialEmission(0, 0, 0, 1);
-		
-		ModelMatrix.main.pushMatrix();
-		ModelMatrix.main.addTranslation((pointB.x+pointA.x)/2, (pointB.y+pointA.y)/2, (pointB.z+pointA.z)/2);
-		
-		Vector3D temp = pointA.to(pointB);
-		temp.normalize();
-		Vector3D rotationVector = temp.cross(new Vector3D(0,-1,0));
-		float angle = (float) Math.acos(temp.y);
-		angle = (float) (angle * 180.0f / Math.PI);
-		ModelMatrix.main.addRotation(angle, rotationVector);
-
-		
-		ModelMatrix.main.addScale(width, 0.5f, width);
+		ModelMatrix.main.addScale(length, length, length);
 		
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 		CapsuleGraphic.drawSolidCapsule(shader, null, null);
 		
 		ModelMatrix.main.popMatrix();
-	}
-	
+	}	
 	
 	public void drawSegmentBone(Shader shader)
 	{
 
 		
-		shader.setMaterialDiffuse(0.5f, 0.3f, 1.0f, 0.8f);
+		shader.setMaterialDiffuse(0.7f, 0.7f, 0.7f, 1.0f);
 		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 		shader.setShininess(150.0f);
 		shader.setMaterialEmission(0, 0, 0, 1);
@@ -157,7 +125,7 @@ public class Segment {
 		ModelMatrix.main.pushMatrix();
 		
 		ModelMatrix.main.addTranslation(pointA.x, pointA.y, pointA.z);
-		ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
+		ModelMatrix.main.addScale(0.2f*this.length, 0.2f*this.length, 0.2f*this.length);
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 		SphereGraphic.drawSolidSphere(shader, null, null);
 		
@@ -175,7 +143,7 @@ public class Segment {
 		ModelMatrix.main.addRotation(angle, rotationVector);
 
 		
-		ModelMatrix.main.addScale(0.2f, this.length, 0.2f);
+		ModelMatrix.main.addScale(0.2f*this.length, this.length, 0.2f*this.length);
 		
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 		BoxGraphic.drawSolidCube(shader, null, null);

@@ -86,7 +86,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		shader = new Shader();
 
-		tex = new Texture(Gdx.files.internal("textures/seamless_ground2048.png")); 
+		tex = new Texture(Gdx.files.internal("textures/sand09.png")); 
 		tex2 = new Texture(Gdx.files.internal("textures/granite02.png")); 
 		tex3 = new Texture(Gdx.files.internal("textures/marble01.png")); 
 		tex4 = new Texture(Gdx.files.internal("textures/pinkMarble01.png")); 

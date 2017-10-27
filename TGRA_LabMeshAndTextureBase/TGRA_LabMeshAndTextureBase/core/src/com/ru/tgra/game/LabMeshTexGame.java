@@ -427,13 +427,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
 		shader.setShininess(5.0f);*/
 
-		ModelMatrix.main.pushMatrix();
+	/*	ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation(modelPosition.x, modelPosition.y, modelPosition.z);
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 
 		
 		
-		ModelMatrix.main.popMatrix();
+		ModelMatrix.main.popMatrix();*/
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
 		Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		shader.setMaterialDiffuse(0.0f, 0.0f, 0.1f, 0.1f);

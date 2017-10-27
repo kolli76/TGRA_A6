@@ -118,11 +118,16 @@ public class ParticleEffect {
 		Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
 		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);//smoke with graygradient
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE); //source color, destination color, traditional transparency
+		if(this.tex == true)
+		{
+			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);//smoke with graygradient
+		}
+		else
+		{
+			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE); //source color, destination color, traditional transparency
 		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
 		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
-		
+		}
 		for(Particle particle: particles)
 		{
 			particle.draw(shader);

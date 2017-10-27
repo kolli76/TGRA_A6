@@ -36,6 +36,9 @@ public class BezierPatch {
 
 		normalBuffer = BufferUtils.newFloatBuffer(vertexCount * 3);
 		normalBuffer.rewind();
+		
+		uvBuffer = BufferUtils.newFloatBuffer(vertexCount * 2);
+		uvBuffer.rewind();
 
 		float increment = 1.0f / (float)resolution;
 		
@@ -112,10 +115,14 @@ public class BezierPatch {
 				normalBuffer.put(normal.x);
 				normalBuffer.put(normal.y);
 				normalBuffer.put(normal.z);
+				
+				uvBuffer.put(u);
+				uvBuffer.put(v);
 			}
 		}
 		vertexBuffer.rewind();
 		normalBuffer.rewind();
+		uvBuffer.rewind();
 
 		indexBuffer = BufferUtils.newShortBuffer(resolution * resolution * 6);
 		indexBuffer.rewind();
@@ -168,7 +175,7 @@ public class BezierPatch {
 
 		Gdx.gl.glVertexAttribPointer(shader.getVertexPointer(), 3, GL20.GL_FLOAT, false, 0, vertexBuffer);
 		Gdx.gl.glVertexAttribPointer(shader.getNormalPointer(), 3, GL20.GL_FLOAT, false, 0, normalBuffer);
-		Gdx.gl.glVertexAttribPointer(shader.getUVPointer(), 2, GL20.GL_FLOAT, false, 0, normalBuffer);
+		Gdx.gl.glVertexAttribPointer(shader.getUVPointer(), 2, GL20.GL_FLOAT, false, 0, uvBuffer);
 
 		Gdx.gl.glDrawElements(GL20.GL_TRIANGLES, 36, GL20.GL_UNSIGNED_SHORT, indexBuffer);
 	}

@@ -90,16 +90,15 @@ void main()
 
 	vec4 specularColor = pow(phong, u_materialShininess) * u_lightColor * materialSpecular;
 
-	float attenuation = 1.0;
+	float spotAttenuation = 1.0;
 	if(u_spotExponent != 0.0)
 	{
-		float spotAttenuation = max(0.0, dot(-v_s, u_spotDirection) / (length_s * length(u_spotDirection)));
+		spotAttenuation = max(0.0, dot(-v_s, u_spotDirection) / (length(-v_s) * length(u_spotDirection)));
 		spotAttenuation = pow(spotAttenuation, u_spotExponent);
-		attenuation *= spotAttenuation;
 	}
-	attenuation *= 1.0 / (u_constantAttenuation + length_s * u_linearAttenuation + pow(length_s, 2.0) * u_quadraticAttenuation);
+	float distanceAttenuation = 1.0 / (u_constantAttenuation + length_s * u_linearAttenuation + pow(length_s, 2.0) * u_quadraticAttenuation);
 		
-	vec4 light1CalcColor = attenuation * (diffuseColor + specularColor);
+	vec4 light1CalcColor = spotAttenuation * distanceAttenuation * (diffuseColor + specularColor);
 
 	// end for each light
 	
@@ -119,6 +118,6 @@ void main()
 		float fogRatio = (v_distance - u_fogStart) / (u_fogEnd - u_fogStart);
 		gl_FragColor = (1 - fogRatio) * finalObjectColor + fogRatio * u_fogColor;
 	}
-	gl_FragColor.a = materialDiffuse.a; //more transparency, transparent objects need to be drawn last
+	gl_FragColor.a = materialDiffuse.a + (1 - materialDiffuse.a) * phong; //more transparency, transparent objects need to be drawn last
 	//in order to draw realistic transparency, we need to order the polygons so that that are drawn from farthest to nearest
 }

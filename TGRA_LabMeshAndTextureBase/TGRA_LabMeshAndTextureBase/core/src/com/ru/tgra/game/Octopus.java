@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.ru.tgra.graphics.ModelMatrix;
 import com.ru.tgra.graphics.Point3D;
 import com.ru.tgra.graphics.Shader;
+import com.ru.tgra.graphics.Vector3D;
 import com.ru.tgra.graphics.shapes.SphereGraphic;
 import com.ru.tgra.graphics.shapes.TorusGraphic;
 
@@ -24,6 +25,9 @@ public class Octopus {
 		shader.setMaterialSpecular(0, 0, 0, 1.0f);
 		
 		ModelMatrix.main.addTranslation(location.x, location.y, location.z);
+		ModelMatrix.main.addScale(0.5f, 0.5f, 0.5f);
+		ModelMatrix.main.addRotation(220f, new Vector3D(1,0,0));
+		ModelMatrix.main.addRotation(180f, new Vector3D(0,0,1));
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 		SphereGraphic.drawSolidSphere(shader, diffuseTexture, alphaTexture);
 		

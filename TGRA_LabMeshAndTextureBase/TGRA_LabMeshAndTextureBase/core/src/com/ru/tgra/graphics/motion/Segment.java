@@ -26,8 +26,8 @@ public class Segment {
 	
 	public Segment(Point3D pos, float length, Segment parent)
 	{
-		polarAngle = (float) (Math.PI/4);
-		azimuthAngle = (float) (Math.PI/4);
+		this.polarAngle = 0.00001f;
+		this.azimuthAngle = 0;
 		this.length = length;
 		
 		this.pointA = pos;

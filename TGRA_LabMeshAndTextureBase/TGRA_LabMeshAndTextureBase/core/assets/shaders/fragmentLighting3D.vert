@@ -14,11 +14,19 @@ uniform mat4 u_projectionMatrix;
 
 uniform vec4 u_eyePosition;
 
-uniform vec4 u_lightPosition;
+const int lightNumber = 2;
+
+struct lightVertex
+{
+	vec4 lightPosition;
+};
+uniform lightVertex lightsV[lightNumber];
+
+//uniform vec4 u_lightPosition;
 
 varying vec2 v_uv;
 varying vec4 v_normal;
-varying vec4 v_s;
+varying vec4 v_s[lightNumber];
 varying vec4 v_h;
 varying float v_distance;
 
@@ -32,19 +40,27 @@ void main()
 	
 	//global coordinates
 
-
-
-
 	//preparation for lighting
 	
 	v_normal = normal;
-
-	v_s = normalize(u_lightPosition - position); //direction to the light
-	//vec4 v = normalize(u_eyePosition - position); //direction to the camera
 	vec4 v = u_eyePosition - position; //direction to the camera
 	v_distance = length(v);
 	
-	v_h = v_s + normalize(v);
+	
+	for(int i = 0; i < lightNumber; i++)
+	{
+		if(lightsV[i].lightPosition.w == 0.0f) //for directional light
+		{
+			v_s[i] = lightsV[i].lightPosition;
+		}
+		else
+		{
+			v_s[i] = lightsV[i].lightPosition - position; //for position light, direction to the light
+		}
+
+		v_h = v + v_s[i]; //highest intensity if h is parallel to the normal n (or m)
+	}
+
 
 	position = u_viewMatrix * position;
 	//eye coordinates

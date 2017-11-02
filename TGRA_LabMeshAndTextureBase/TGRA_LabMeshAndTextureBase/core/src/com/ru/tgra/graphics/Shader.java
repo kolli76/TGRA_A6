@@ -36,16 +36,18 @@ public class Shader {
 
 	private int globalAmbLoc;
 	//private int colorLoc;
-	private int numberOfLights = 1;
-	private int lightPosLoc[] = new int[numberOfLights];
 
-	private int spotDirLoc;
-	private int spotExpLoc;
-	private int constantAttLoc;
-	private int linearAttLoc;
-	private int quadraticAttLoc;
 	
-	private int lightColorLoc;
+	//private int lightPosLoc;
+	private int numberOfLights = 2;
+	private int lightPosLoc[] = new int[numberOfLights];
+	private int spotDirLoc[] = new int[numberOfLights];
+	private int spotExpLoc[] = new int[numberOfLights];
+	private int constantAttLoc[] = new int[numberOfLights];
+	private int linearAttLoc[] = new int[numberOfLights];
+	private int quadraticAttLoc[] = new int[numberOfLights];
+	private int lightColorLoc[] = new int[numberOfLights];
+	
 	private int matDifLoc;
 	private int matSpecLoc;
 	private int matShineLoc;
@@ -110,18 +112,16 @@ public class Shader {
 
 		globalAmbLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_globalAmbient");
 
-		
 		for(int i = 0; i < numberOfLights; i++)
 		{
-			lightPosLoc[i]				= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsV["+i+"].lightPosition");
+			lightPosLoc[i]		= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsV["+i+"].lightPosition");
+			spotDirLoc[i]		= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].spotDirection");
+			spotExpLoc[i]		= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].spotExponent");
+			lightColorLoc[i]	= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].lightColor");
+			constantAttLoc[i]	= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].constantAttenuation");
+			linearAttLoc[i]		= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].linearAttenuation");
+			quadraticAttLoc[i]	= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].quadraticAttenuation");
 		}
-		spotDirLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_spotDirection");
-		spotExpLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_spotExponent");
-		constantAttLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_constantAttenuation");
-		linearAttLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_linearAttenuation");
-		quadraticAttLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_quadraticAttenuation");
-	
-		lightColorLoc			= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_lightColor");
 		matDifLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialDiffuse");
 		matSpecLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialSpecular");
 		matShineLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialShininess");
@@ -205,34 +205,41 @@ public class Shader {
 	}
 	public void setLightPosition(int i, float x, float y, float z, float w)
 	{
+		//Gdx.gl.glUniform4f(lightPosLoc, x, y, z, w);	
 		if (i >= numberOfLights){return;}
-		Gdx.gl.glUniform4f(lightPosLoc[i], x, y, z, w);	
+			Gdx.gl.glUniform4f(lightPosLoc[i], x, y, z, w);
 	}
 
-	public void setSpotDirection(float x, float y, float z, float w)
+	public void setSpotDirection(int i, float x, float y, float z, float w)
 	{
-		Gdx.gl.glUniform4f(spotDirLoc, x, y, z, w);
+		if (i >= numberOfLights){return;}
+			Gdx.gl.glUniform4f(spotDirLoc[i], x, y, z, w);
 	}
-	public void setSpotExponent(float exp)
+	public void setSpotExponent(int i, float exp)
 	{
-		Gdx.gl.glUniform1f(spotExpLoc, exp);
+		if (i >= numberOfLights){return;}
+			Gdx.gl.glUniform1f(spotExpLoc[i], exp);
 	}
-	public void setConstantAttenuation(float att)
+	public void setConstantAttenuation(int i, float att)
 	{
-		Gdx.gl.glUniform1f(constantAttLoc, att);
+		if (i >= numberOfLights){return;}
+			Gdx.gl.glUniform1f(constantAttLoc[i], att);
 	}
-	public void setLinearAttenuation(float att)
+	public void setLinearAttenuation(int i, float att)
 	{
-		Gdx.gl.glUniform1f(linearAttLoc, att);
+		if (i >= numberOfLights){return;}
+			Gdx.gl.glUniform1f(linearAttLoc[i], att);
 	}
-	public void setQuadraticAttenuation(float att)
+	public void setQuadraticAttenuation(int i, float att)
 	{
-		Gdx.gl.glUniform1f(quadraticAttLoc, att);
+		if (i >= numberOfLights){return;}
+			Gdx.gl.glUniform1f(quadraticAttLoc[i], att);
 	}
 
-	public void setLightColor(float r, float g, float b, float a)
+	public void setLightColor(int i, float r, float g, float b, float a)
 	{
-		Gdx.gl.glUniform4f(lightColorLoc, r, g, b, a);
+		if (i >= numberOfLights){return;}
+			Gdx.gl.glUniform4f(lightColorLoc[i], r, g, b, a);
 	}
 	public void setMaterialDiffuse(float r, float g, float b, float a)
 	{

@@ -168,18 +168,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		railCam.perspectiveProjection(30.0f, 1, 3, 100);
 		
 		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-<<<<<<< HEAD
-
-		tent1 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,2));
-		tent2 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,2));
-		tent3 = new Tentacle(30, 0.1f, new Point3D(4,-0.1f,4));
-		tent4 = new Tentacle(30, 0.1f, new Point3D(4,-0.1f,4));
-		tent5 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,4));
-		tent6 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,4));
-		tent7 = new Tentacle(30, 0.1f, new Point3D(4,-0.1f,2));
-		tent8 = new Tentacle(30, 0.1f, new Point3D(4,-0.1f,2));
-=======
->>>>>>> origin/master
 		
 		Otto = new Octopus(new Point3D(3.0f, 0.0f, 3.0f));
 		tentacles = new Tentacle[8];
@@ -217,182 +205,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		controlPoints.add(new Point3D(4.0f, 0.0f, 6.0f));
 		controlPoints.add(new Point3D(6.0f, 0.0f, 6.0f));
 
-<<<<<<< HEAD
-	/*	
-		motion = new BezierMotion(new Point3D(-1,4,-1), new Point3D(1,6,1), 
-									new Point3D(7,6,-4), new Point3D(1,3,1),
-									3.0f, 10.0f);*/	
-		
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-		tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() +1.0f));
-
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-		tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 4.0f));
-
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-		tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 4.0f));
-
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-		tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 1.0f, rand.nextFloat() + 1.0f));
-
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-		tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() + 0.5f, rand.nextFloat() + 1.0f));
-
-		patch0 = new BezierPatch(controlPoints);
-		patch1 = new BezierPatch(tent1pts);
-		patch2 = new BezierPatch(tent2pts);
-		patch3 = new BezierPatch(tent3pts);
-		patch4 = new BezierPatch(tent4pts);
-		patch5 = new BezierPatch(tent5pts);
-		patch6 = new BezierPatch(tent6pts);
-		patch7 = new BezierPatch(tent7pts);
-		patch8 = new BezierPatch(tent8pts);
-		
-		motion0 = new BSplineMotion(controlPoints, 1.0f, 20.0f);
-		motion1 = new BSplineMotion(tent1pts, 1.0f, 100.0f);
-		motion2 = new BSplineMotion(tent2pts, 1.0f, 100.0f);
-		motion3 = new BSplineMotion(tent3pts, 1.0f, 100.0f);
-		motion4 = new BSplineMotion(tent4pts, 1.0f, 100.0f);
-		motion5 = new BSplineMotion(tent5pts, 1.0f, 100.0f);
-		motion6 = new BSplineMotion(tent6pts, 1.0f, 100.0f);
-		motion7 = new BSplineMotion(tent7pts, 1.0f, 100.0f);
-		motion8 = new BSplineMotion(tent8pts, 1.0f, 100.0f);
-
-		modelPosition0 = new Point3D();
-		modelPosition1 = new Point3D();
-		modelPosition2 = new Point3D();
-		modelPosition3 = new Point3D();
-		modelPosition4 = new Point3D();
-		modelPosition5 = new Point3D();
-		modelPosition6 = new Point3D();
-		modelPosition7 = new Point3D();
-		modelPosition8 = new Point3D();
-		
-		
-		targetAngle = 0;
-		target = new Point3D(0,0,0);
-=======
 		for (int i = 0; i < 8; i++)
 		{
 			tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat(), rand.nextFloat() +1.0f));
@@ -427,8 +239,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ArrayList<Point3D> cameraRailPoints = new ArrayList<Point3D>();
 		
-		
->>>>>>> origin/master
 	}
 
 	private void input()
@@ -438,19 +248,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private void update()
 	{
 		float deltaTime = Gdx.graphics.getDeltaTime(); //gives time between frames
-<<<<<<< HEAD
-		//System.out.println(Gdx.graphics.getFramesPerSecond());
-		targetAngle += 0.3f * deltaTime;
-		
-		float dx = (float) Math.cos(targetAngle);
-		float dy = (float) Math.sin(targetAngle);
-		float dz = (float) Math.sin(targetAngle);
-		target.set(dx, dy, dz);
-		
-		//tent.follow(target);
-		//tent.reach(target);
-=======
->>>>>>> origin/master
+
 		
 		if(firstFrame)
 		{
@@ -595,14 +393,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 
 			ModelMatrix.main.loadIdentityMatrix();
-<<<<<<< HEAD
 
-			//tent.drawTentacleSkeleton(shader);
-=======
-			
-			
-			
-			
+/*
 			Otto.draw(shader, null, null);
 
 			shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f); //looks good, red
@@ -628,24 +420,21 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 			shader.setMaterialDiffuse(1.0f, 0.0f, 1.0f, 1.0f); //purple looks good
 			tentacles[7].drawTentacle(shader);
->>>>>>> origin/master
+*/
 			
 			//float s = (float)Math.sin((angle / 2.0) * Math.PI / 180.0);
 			//float c = (float)Math.cos((angle / 2.0) * Math.PI / 180.0);
 			
 			//shader.setLightPosition(3, 3, 3, 1.0f);
-			shader.setLightPosition(0, cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
+			shader.setLightPosition(0, playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
 
-<<<<<<< HEAD
 
 			float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
 			float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
 
 			//shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
-			shader.setSpotDirection(0,-cam.n.x, -cam.n.y, -cam.n.z, 0.0f);
-=======
-			shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
->>>>>>> origin/master
+			shader.setSpotDirection(0,-playerCam.n.x, -playerCam.n.y, -playerCam.n.z, 0.0f);
+
 			//shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
 			shader.setSpotExponent(0,20.0f);
 			shader.setConstantAttenuation(0,1.0f);
@@ -710,14 +499,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 
 		patch0.draw(shader, tex);
-		
-<<<<<<< HEAD
+
 		shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.1f);
-=======
-		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		shader.setMaterialDiffuse(0.0f, 0.0f, 0.1f, 0.1f);
->>>>>>> origin/master
+
 		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(10.0f);
@@ -730,31 +514,31 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
-<<<<<<< HEAD
+		
 		shader.setMaterialDiffuse(0.5f, 0.5f, 0.5f, 1.0f); //gray
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent3.drawTentacle(shader);
+		tentacles[2].drawTentacle(shader);
 
 		shader.setMaterialDiffuse(0.0f, 1.0f, 0.0f, 1.0f); //green
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent4.drawTentacle(shader);
+		tentacles[3].drawTentacle(shader);
 
 		shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 1.0f); //blue looks good
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent5.drawTentacle(shader);
+		tentacles[4].drawTentacle(shader);
 
 		shader.setMaterialDiffuse(0.0f, 1.0f, 1.0f, 1.0f); //cyan looks good
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent6.drawTentacle(shader);
-
+		tentacles[5].drawTentacle(shader);
+		
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		groundRustle2.draw(shader);
@@ -783,13 +567,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent1.drawTentacle(shader);
+		tentacles[0].drawTentacle(shader);
 
 		shader.setMaterialDiffuse(1.0f, 1.0f, 1.0f, 1.0f); //white
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent2.drawTentacle(shader);
+		tentacles[1].drawTentacle(shader);
 
 	
 
@@ -797,13 +581,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent7.drawTentacle(shader);
+		tentacles[6].drawTentacle(shader);
 
 		shader.setMaterialDiffuse(1.0f, 0.0f, 1.0f, 1.0f); //purple looks good
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
-		tent8.drawTentacle(shader);
+		tentacles[7].drawTentacle(shader);
 		
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -839,8 +623,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		SphereGraphic.drawSolidSphere(shader, null, null);
 		
 		ModelMatrix.main.popMatrix(); */
-=======
->>>>>>> origin/master
+
 		
 
 

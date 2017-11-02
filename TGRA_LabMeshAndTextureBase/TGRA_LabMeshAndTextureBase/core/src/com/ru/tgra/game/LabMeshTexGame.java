@@ -31,8 +31,14 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 	private float angle;
 
-	private Camera cam;
-	private Camera topCam;
+	private Camera playerCam;
+	private Camera railCam;
+	
+	private BSplineMotion cameraRail;
+	private Point3D camOnRail;
+	
+	private BSplineMotion targetRail;
+	private Point3D targetOnRail;
 	
 	private float fov = 90.0f;
 	
@@ -54,33 +60,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	ParticleEffect groundRustle4;
 	
 	//BezierMotion motion;
-	BSplineMotion motion0;
-	Point3D modelPosition0;
 
-	BSplineMotion motion1;
-	Point3D modelPosition1;
-
-	BSplineMotion motion2;
-	Point3D modelPosition2;
-
-	BSplineMotion motion3;
-	Point3D modelPosition3;
-
-	BSplineMotion motion4;
-	Point3D modelPosition4;
-
-	BSplineMotion motion5;
-	Point3D modelPosition5;
-
-	BSplineMotion motion6;
-	Point3D modelPosition6;
-
-	BSplineMotion motion7;
-	Point3D modelPosition7;
-
-	BSplineMotion motion8;
-	Point3D modelPosition8;
-
+	BSplineMotion tentacleMotion[];
+	Point3D modelPosition[];
+	
 	private Texture tex;
 	private Texture tex2;
 	private Texture tex3;
@@ -94,30 +77,11 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private Texture ground02;
 	
 	private Octopus Otto;
-	private Tentacle tent1;
-	private Tentacle tent2;
-	private Tentacle tent3;
-	private Tentacle tent4;
-	private Tentacle tent5;
-	private Tentacle tent6;
-	private Tentacle tent7;
-	private Tentacle tent8;
-	
-	private Point3D target;
-	private float targetAngle;
+	private Tentacle[] tentacles;
 	
 	Random rand = new Random();
 	
-	BezierPatch patch0;
-	BezierPatch patch1;
-	BezierPatch patch2;
-	BezierPatch patch3;
-	BezierPatch patch4;
-	BezierPatch patch5;
-	BezierPatch patch6;
-	BezierPatch patch7;
-	BezierPatch patch8;
-	
+	BezierPatch patch0;	
 
 	@Override
 	public void create () {
@@ -197,25 +161,14 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		ModelMatrix.main.loadIdentityMatrix();
 		shader.setModelMatrix(ModelMatrix.main.getMatrix());
 
-		cam = new Camera();
-		cam.look(new Point3D(-2f, 3f, -2f), new Point3D(0,2,0), new Vector3D(0,1,0));
+		playerCam = new Camera();
+		playerCam.look(new Point3D(-2f, 3f, -2f), new Point3D(0,2,0), new Vector3D(0,1,0));
 
-		topCam = new Camera();
-		//orthoCam.orthographicProjection(-5, 5, -5, 5, 3.0f, 100);
-		topCam.perspectiveProjection(30.0f, 1, 3, 100);
-
-		//TODO: try this way to create a texture image
-		/*Pixmap pm = new Pixmap(128, 128, Format.RGBA8888);
-		for(int i = 0; i < pm.getWidth(); i++)
-		{
-			for(int j = 0; j < pm.getWidth(); j++)
-			{
-				pm.drawPixel(i, j, rand.nextInt());
-			}
-		}
-		tex = new Texture(pm);*/
-
+		railCam = new Camera();
+		railCam.perspectiveProjection(30.0f, 1, 3, 100);
+		
 		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+<<<<<<< HEAD
 
 		tent1 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,2));
 		tent2 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,2));
@@ -225,10 +178,17 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tent6 = new Tentacle(30, 0.1f, new Point3D(2,-0.1f,4));
 		tent7 = new Tentacle(30, 0.1f, new Point3D(4,-0.1f,2));
 		tent8 = new Tentacle(30, 0.1f, new Point3D(4,-0.1f,2));
+=======
+>>>>>>> origin/master
 		
-
-		Otto = new Octopus(new Point3D(3,0.0f,3));
+		Otto = new Octopus(new Point3D(3.0f, 0.0f, 3.0f));
+		tentacles = new Tentacle[8];
 		
+		for(int i = 0; i < 4; i++)
+		{
+			tentacles[i] = new Tentacle(30, 0.1f, new Point3D(3.0f+1.0f, -0.1f, 2.0f + i * 0.8f));
+			tentacles[4+i] = new Tentacle(30, 0.1f, new Point3D(3.0f-1.0f, -0.1f, 2.0f + i * 0.8f));
+		}
 		
 		ArrayList<Point3D> controlPoints = new ArrayList<Point3D>();
 		ArrayList<Point3D> tent1pts = new ArrayList<Point3D>();
@@ -257,6 +217,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		controlPoints.add(new Point3D(4.0f, 0.0f, 6.0f));
 		controlPoints.add(new Point3D(6.0f, 0.0f, 6.0f));
 
+<<<<<<< HEAD
 	/*	
 		motion = new BezierMotion(new Point3D(-1,4,-1), new Point3D(1,6,1), 
 									new Point3D(7,6,-4), new Point3D(1,3,1),
@@ -431,6 +392,43 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		targetAngle = 0;
 		target = new Point3D(0,0,0);
+=======
+		for (int i = 0; i < 8; i++)
+		{
+			tent1pts.add(new Point3D(rand.nextFloat() +1.0f, rand.nextFloat(), rand.nextFloat() +1.0f));
+			tent2pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() - 0.5f, rand.nextFloat() + 1.0f));
+			tent3pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() - 0.5f, rand.nextFloat() + 4.0f));
+			tent4pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat(), rand.nextFloat() + 4.0f));
+			tent5pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat() - 0.5f, rand.nextFloat() + 4.0f));
+			tent6pts.add(new Point3D(rand.nextFloat() + 1.0f, rand.nextFloat(), rand.nextFloat() + 4.0f));
+			tent7pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat() - 0.5f, rand.nextFloat() + 1.0f));
+			tent8pts.add(new Point3D(rand.nextFloat() + 4.0f, rand.nextFloat(), rand.nextFloat() + 1.0f));
+		}
+		patch0 = new BezierPatch(controlPoints);
+		
+		tentacleMotion = new BSplineMotion[8];
+		tentacleMotion[0] = new BSplineMotion(tent1pts, 2.0f, 20.0f);
+		tentacleMotion[1] = new BSplineMotion(tent2pts, 2.0f, 20.0f);
+		tentacleMotion[2] = new BSplineMotion(tent3pts, 2.0f, 20.0f);
+		tentacleMotion[3] = new BSplineMotion(tent4pts, 2.0f, 20.0f);
+		tentacleMotion[4] = new BSplineMotion(tent5pts, 2.0f, 20.0f);
+		tentacleMotion[5] = new BSplineMotion(tent6pts, 2.0f, 20.0f);
+		tentacleMotion[6] = new BSplineMotion(tent7pts, 2.0f, 20.0f);
+		tentacleMotion[7] = new BSplineMotion(tent8pts, 2.0f, 20.0f);
+
+		modelPosition = new Point3D[8];
+		for(int i = 0; i < 8; i++)
+		{
+			modelPosition[i] = new Point3D();
+		}
+		
+		camOnRail = new Point3D(10,10,5);
+		targetOnRail = new Point3D(0,0,0);
+		
+		ArrayList<Point3D> cameraRailPoints = new ArrayList<Point3D>();
+		
+		
+>>>>>>> origin/master
 	}
 
 	private void input()
@@ -440,6 +438,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private void update()
 	{
 		float deltaTime = Gdx.graphics.getDeltaTime(); //gives time between frames
+<<<<<<< HEAD
 		//System.out.println(Gdx.graphics.getFramesPerSecond());
 		targetAngle += 0.3f * deltaTime;
 		
@@ -450,6 +449,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		//tent.follow(target);
 		//tent.reach(target);
+=======
+>>>>>>> origin/master
 		
 		if(firstFrame)
 		{
@@ -464,46 +465,44 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		angle += 180.0f * deltaTime;
 
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			cam.slide(-3.0f * deltaTime, 0, 0);
+			playerCam.slide(-3.0f * deltaTime, 0, 0);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			cam.slide(3.0f * deltaTime, 0, 0);
+			playerCam.slide(3.0f * deltaTime, 0, 0);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-			cam.slide(0, 0, -3.0f * deltaTime);
+			playerCam.slide(0, 0, -3.0f * deltaTime);
 			//cam.walkForward(3.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-			cam.slide(0, 0, 3.0f * deltaTime);
+			playerCam.slide(0, 0, 3.0f * deltaTime);
 			//cam.walkForward(-3.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.R)) {
-			cam.slide(0, 3.0f * deltaTime, 0);
+			playerCam.slide(0, 3.0f * deltaTime, 0);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.F)) {
-			cam.slide(0, -3.0f * deltaTime, 0);
+			playerCam.slide(0, -3.0f * deltaTime, 0);
 		}
 
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			cam.yaw(-90.0f * deltaTime);
-			//cam.rotateY(90.0f * deltaTime);
+			playerCam.yaw(-90.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			cam.yaw(90.0f * deltaTime);
-			//cam.rotateY(-90.0f * deltaTime);
+			playerCam.yaw(90.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			cam.pitch(90.0f * deltaTime);
+			playerCam.pitch(90.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			cam.pitch(-90.0f * deltaTime);
+			playerCam.pitch(-90.0f * deltaTime);
 		}
 
 		if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			cam.roll(-90.0f * deltaTime);
+			playerCam.roll(-90.0f * deltaTime);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-			cam.roll(90.0f * deltaTime);
+			playerCam.roll(90.0f * deltaTime);
 		}
 
 		if(Gdx.input.isKeyPressed(Input.Keys.T)) {
@@ -520,24 +519,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		}
 
 		//do all updates to the game
-		//motion0.getCurrentPosition(currentTime, modelPosition0);
-		motion1.getCurrentPosition(currentTime, modelPosition1);
-		motion2.getCurrentPosition(currentTime, modelPosition2);
-		motion3.getCurrentPosition(currentTime, modelPosition3);
-		motion4.getCurrentPosition(currentTime, modelPosition4);
-		motion5.getCurrentPosition(currentTime, modelPosition5);
-		motion6.getCurrentPosition(currentTime, modelPosition6);
-		motion7.getCurrentPosition(currentTime, modelPosition7);
-		motion8.getCurrentPosition(currentTime, modelPosition8);
+		for (int i = 0; i < 8; i++)
+		{
+			tentacleMotion[i].getCurrentPosition(currentTime, modelPosition[i]);
+		}
 		
-		tent1.reach(modelPosition1);
-		tent2.reach(modelPosition2);
-		tent3.reach(modelPosition3);
-		tent4.reach(modelPosition4);
-		tent5.reach(modelPosition5);
-		tent6.reach(modelPosition6);
-		tent7.reach(modelPosition7);
-		tent8.reach(modelPosition8);
+		for (int i = 0; i < 8; i++)
+		{
+			tentacles[i].reach(modelPosition[i]);
+		}
 		
 		smallBubbles.update(deltaTime);
 		mediumBubbles.update(deltaTime);
@@ -568,10 +558,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			{
 				Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
 				Gdx.gl.glScissor(0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				cam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 100.0f);
-				shader.setViewMatrix(cam.getViewMatrix());
-				shader.setProjectionMatrix(cam.getProjectionMatrix());
-				shader.setEyePosition(cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
+				playerCam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 100.0f);
+				shader.setViewMatrix(playerCam.getViewMatrix());
+				shader.setProjectionMatrix(playerCam.getProjectionMatrix());
+				shader.setEyePosition(playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
 				
 				//shader.setFogStart(0.0f);
 				//shader.setFogEnd(20.0f);
@@ -583,12 +573,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			{
 				Gdx.gl.glViewport(Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
 				Gdx.gl.glScissor(Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				topCam.look(new Point3D(cam.eye.x, 20.0f, cam.eye.z), cam.eye, new Vector3D(0,0,-1));
-				//orthoCam.look(new Point3D(7.0f, 40.0f, -7.0f), new Point3D(7.0f, 0.0f, -7.0f), new Vector3D(0,0,-1));
-				topCam.perspectiveProjection(30.0f, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 3, 100);
-				shader.setViewMatrix(topCam.getViewMatrix());
-				shader.setProjectionMatrix(topCam.getProjectionMatrix());
-				shader.setEyePosition(topCam.eye.x, topCam.eye.y, topCam.eye.z, 1.0f);
+				
+				railCam.look(camOnRail, targetOnRail, new Vector3D(0,1,0));
+				
+				railCam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 100.0f);
+				shader.setViewMatrix(railCam.getViewMatrix());
+				shader.setProjectionMatrix(railCam.getProjectionMatrix());
+				shader.setEyePosition(railCam.eye.x, railCam.eye.y, railCam.eye.z, 1.0f);
 				
 				shader.setFogStart(90.0f);
 				shader.setFogEnd(100.0f);
@@ -604,28 +595,57 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 
 			ModelMatrix.main.loadIdentityMatrix();
+<<<<<<< HEAD
 
 			//tent.drawTentacleSkeleton(shader);
+=======
 			
-			/*ModelMatrix.main.pushMatrix();
-			ModelMatrix.main.addTranslation(target.x, target.y, target.z);
-			ModelMatrix.main.addScale(0.2f, 0.2f, 0.2f);
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-			SphereGraphic.drawSolidSphere(shader, null, null);
-			ModelMatrix.main.popMatrix();
-*/
-			float s = (float)Math.sin((angle / 2.0) * Math.PI / 180.0);
-			float c = (float)Math.cos((angle / 2.0) * Math.PI / 180.0);
+			
+			
+			
+			Otto.draw(shader, null, null);
+
+			shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f); //looks good, red
+			tentacles[0].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(1.0f, 1.0f, 1.0f, 1.0f); //white
+			tentacles[1].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(0.5f, 0.5f, 0.5f, 1.0f); //gray
+			tentacles[2].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(0.0f, 1.0f, 0.0f, 1.0f);
+			tentacles[3].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 1.0f); //blue looks good
+			tentacles[4].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(0.0f, 1.0f, 1.0f, 1.0f); //cyan looks good
+			tentacles[5].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(1.0f, 1.0f, 0.0f, 1.0f); //yellow, looks good
+			tentacles[6].drawTentacle(shader);
+
+			shader.setMaterialDiffuse(1.0f, 0.0f, 1.0f, 1.0f); //purple looks good
+			tentacles[7].drawTentacle(shader);
+>>>>>>> origin/master
+			
+			//float s = (float)Math.sin((angle / 2.0) * Math.PI / 180.0);
+			//float c = (float)Math.cos((angle / 2.0) * Math.PI / 180.0);
 			
 			//shader.setLightPosition(3, 3, 3, 1.0f);
 			shader.setLightPosition(0, cam.eye.x, cam.eye.y, cam.eye.z, 1.0f);
 
+<<<<<<< HEAD
 
 			float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
 			float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
 
 			//shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
 			shader.setSpotDirection(0,-cam.n.x, -cam.n.y, -cam.n.z, 0.0f);
+=======
+			shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
+>>>>>>> origin/master
 			//shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
 			shader.setSpotExponent(0,20.0f);
 			shader.setConstantAttenuation(0,1.0f);
@@ -691,7 +711,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		patch0.draw(shader, tex);
 		
+<<<<<<< HEAD
 		shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.1f);
+=======
+		Gdx.gl.glEnable(GL20.GL_BLEND); 
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		shader.setMaterialDiffuse(0.0f, 0.0f, 0.1f, 0.1f);
+>>>>>>> origin/master
 		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(10.0f);
@@ -704,6 +730,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
+<<<<<<< HEAD
 		shader.setMaterialDiffuse(0.5f, 0.5f, 0.5f, 1.0f); //gray
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
@@ -812,6 +839,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		SphereGraphic.drawSolidSphere(shader, null, null);
 		
 		ModelMatrix.main.popMatrix(); */
+=======
+>>>>>>> origin/master
 		
 
 

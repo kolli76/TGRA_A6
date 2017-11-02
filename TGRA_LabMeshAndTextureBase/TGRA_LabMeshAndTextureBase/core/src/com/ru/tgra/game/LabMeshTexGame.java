@@ -364,7 +364,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				//shader.setFogStart(0.0f);
 				//shader.setFogEnd(20.0f);
 				//shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
@@ -436,13 +436,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setSpotDirection(0,-playerCam.n.x, -playerCam.n.y, -playerCam.n.z, 0.0f);
 
 			//shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
-			shader.setSpotExponent(0,20.0f);
+			shader.setSpotExponent(0,2.0f);
 			shader.setConstantAttenuation(0,1.0f);
 			shader.setLinearAttenuation(0,0.00f);
 			shader.setQuadraticAttenuation(0,0.00f);
 			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
 			
-			shader.setLightPosition(1, 4, 4, 4, 1.0f);
+			/*shader.setLightPosition(1, 4, 4, 4, 1.0f);
 
 			shader.setSpotDirection(1, 0, -0.3f, 0, 0.0f);
 			
@@ -450,9 +450,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setConstantAttenuation(1,1.0f);
 			shader.setLinearAttenuation(1,0.00f);
 			shader.setQuadraticAttenuation(1,0.00f);
-			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
+			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);*/
 			
-			shader.setGlobalAmbient(0.0f, 0.0f, 0.0f, 1);
+			shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
 			
 
 			/*ModelMatrix.main.pushMatrix();

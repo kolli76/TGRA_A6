@@ -13,7 +13,7 @@ uniform float u_usesAlphaTexture;
 uniform float u_usesEmissionTexture;
 
 
-const int lightNr = 2;
+const int lightNr = 1;
 
 struct lightFragment
 {

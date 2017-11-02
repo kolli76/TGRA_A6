@@ -225,6 +225,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		ArrayList<Point3D> cameraRailPoints = new ArrayList<Point3D>();
 		
 		
+		cameraRailPoints.add(new Point3D(10,10,5));
+		cameraRailPoints.add(new Point3D(5,5,5));
+		cameraRailPoints.add(new Point3D(3,3,3));
+		cameraRailPoints.add(new Point3D(2,2,2));
+		cameraRailPoints.add(new Point3D(3,2,2));
+		cameraRailPoints.add(new Point3D(4,2,2));
+		
+		cameraRail = new BSplineMotion(cameraRailPoints, 0.2f, 20.0f);
+		
 	}
 
 	private void input()
@@ -300,6 +309,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			Gdx.graphics.setDisplayMode(500, 500, false);
 			Gdx.app.exit();
 		}
+		
+		cameraRail.getCurrentPosition(currentTime, camOnRail);
 
 		//do all updates to the game
 		for (int i = 0; i < 8; i++)

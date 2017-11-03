@@ -13,7 +13,7 @@ uniform float u_usesAlphaTexture;
 uniform float u_usesEmissionTexture;
 
 
-const int lightNr = 1;
+const int lightNr = 2;
 
 struct lightFragment
 {
@@ -43,7 +43,7 @@ varying float v_distance;
 varying vec2 v_uv;
 varying vec4 v_normal;
 varying vec4 v_s[lightNr]; //vector to the light
-varying vec4 v_h; //halfway vector	//v_h[i]
+varying vec4 v_h[lightNr]; //halfway vector	//v_h[i]
 
 
 void main()
@@ -96,13 +96,13 @@ void main()
 	vec4 finalObjectColor = u_globalAmbient + u_materialEmission;
 	
 	float spotAttenuation = 1.0;
-	
+	float phongAttenuation;
 	for(int i = 0; i < lightNr; i++)
 	{
 		lambert = max(0.0f, dot(v_normal, v_s[i]) / (length_n * length_s[i]));
-		phong = max(0.0f, dot(v_normal, v_h) / (length_n * length(v_h)));
+		phong = max(0.0f, dot(v_normal, v_h[i]) / (length_n * length(v_h[i])));
 		phong = pow(phong, u_materialShininess);
-	
+		phongAttenuation += phong;
 		vec4 diffuseColor = lambert * lightsF[i].lightColor * materialDiffuse;
 		vec4 specularColor =  phong * lightsF[i].lightColor * materialSpecular;
 	
@@ -135,6 +135,6 @@ void main()
 		gl_FragColor = (1 - fogRatio) * finalObjectColor + fogRatio * u_fogColor;
 	}
 	//bua til sér value fyrir phong og leggdu saman phong í for loopunnu
-	gl_FragColor.a = materialDiffuse.a + (1 - materialDiffuse.a) * phong; //more transparency, transparent objects need to be drawn last
+	gl_FragColor.a = materialDiffuse.a + (1 - materialDiffuse.a) * phongAttenuation; //more transparency, transparent objects need to be drawn last
 	//in order to draw realistic transparency, we need to order the polygons so that that are drawn from farthest to nearest
 }

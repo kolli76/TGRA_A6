@@ -532,7 +532,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setQuadraticAttenuation(0,0.00f);
 			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
 			
-			/*shader.setLightPosition(1, 4, 4, 4, 1.0f);
+			shader.setLightPosition(1, 4, 4, 4, 1.0f);
 
 			shader.setSpotDirection(1, 0, -0.3f, 0, 0.0f);
 			
@@ -540,7 +540,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setConstantAttenuation(1,1.0f);
 			shader.setLinearAttenuation(1,0.00f);
 			shader.setQuadraticAttenuation(1,0.00f);
-			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);*/
+			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
 			
 			shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
 			

@@ -14,7 +14,7 @@ uniform mat4 u_projectionMatrix;
 
 uniform vec4 u_eyePosition;
 
-const int lightNumber = 1;
+const int lightNumber = 2;
 
 struct lightVertex
 {
@@ -27,7 +27,7 @@ uniform lightVertex lightsV[lightNumber];
 varying vec2 v_uv;
 varying vec4 v_normal;
 varying vec4 v_s[lightNumber];
-varying vec4 v_h;
+varying vec4 v_h[lightNumber];
 varying float v_distance;
 
 void main()
@@ -58,7 +58,7 @@ void main()
 			v_s[i] = lightsV[i].lightPosition - position; //for position light, direction to the light
 		}
 
-		v_h = v + v_s[i]; //highest intensity if h is parallel to the normal n (or m)
+		v_h[i] = v + v_s[i]; //highest intensity if h is parallel to the normal n (or m)
 	}
 
 

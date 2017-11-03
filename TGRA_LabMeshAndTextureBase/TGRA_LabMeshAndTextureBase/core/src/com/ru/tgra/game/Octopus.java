@@ -17,6 +17,21 @@ public class Octopus {
 		this.location = location;
 	}
 	
+	public float getX()
+	{
+		return this.location.x;
+	}
+	
+	public float getY()
+	{
+		return this.location.y;
+	}
+	
+	public float getZ()
+	{
+		return this.location.z;
+	}
+	
 	public void draw(Shader shader, Texture diffuseTexture, Texture alphaTexture)
 	{
 		ModelMatrix.main.pushMatrix();

@@ -39,7 +39,7 @@ public class Shader {
 
 	
 	//private int lightPosLoc;
-	private int numberOfLights = 2;
+	private int numberOfLights = 1;
 	private int lightPosLoc[] = new int[numberOfLights];
 	private int spotDirLoc[] = new int[numberOfLights];
 	private int spotExpLoc[] = new int[numberOfLights];
@@ -49,6 +49,7 @@ public class Shader {
 	private int lightColorLoc[] = new int[numberOfLights];
 	
 	private int matDifLoc;
+	private int matAmbLoc;
 	private int matSpecLoc;
 	private int matShineLoc;
 	private int matEmissionLoc;
@@ -123,6 +124,7 @@ public class Shader {
 			quadraticAttLoc[i]	= Gdx.gl.glGetUniformLocation(renderingProgramID, "lightsF["+i+"].quadraticAttenuation");
 		}
 		matDifLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialDiffuse");
+		matAmbLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialAmbiance");
 		matSpecLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialSpecular");
 		matShineLoc				= Gdx.gl.glGetUniformLocation(renderingProgramID, "u_materialShininess");
 		
@@ -244,6 +246,10 @@ public class Shader {
 	public void setMaterialDiffuse(float r, float g, float b, float a)
 	{
 		Gdx.gl.glUniform4f(matDifLoc, r, g, b, a);
+	}
+	public void setMaterialAmbiance(float r, float g, float b, float a)
+	{
+		Gdx.gl.glUniform4f(matAmbLoc, r, g, b, a);
 	}
 	public void setMaterialSpecular(float r, float g, float b, float a)
 	{

@@ -13,7 +13,7 @@ uniform float u_usesAlphaTexture;
 uniform float u_usesEmissionTexture;
 
 
-const int lightNr = 2;
+const int lightNr = 1;
 
 struct lightFragment
 {
@@ -28,6 +28,7 @@ uniform lightFragment lightsF[lightNr];
 
 uniform vec4 u_globalAmbient;
 uniform vec4 u_materialDiffuse;
+uniform vec4 u_materialAmbiance;
 uniform vec4 u_materialSpecular;
 uniform vec4 u_materialEmission;
 uniform float u_materialShininess;
@@ -93,8 +94,8 @@ void main()
 	}
 	float length_n = length(v_normal);
 	
-	vec4 finalObjectColor = u_globalAmbient + u_materialEmission;
-	
+	 // = u_globalAmbient + u_materialEmission;
+	vec4 finalColor;
 	float spotAttenuation = 1.0;
 	float phongAttenuation;
 	for(int i = 0; i < lightNr; i++)
@@ -115,10 +116,10 @@ void main()
 		
 		vec4 lightCalcColor = distanceAttenuation * spotAttenuation * (diffuseColor + specularColor);
 	
-		finalObjectColor += lightCalcColor;
+		finalColor += lightCalcColor;
 	}
 	// end for each light
-
+	vec4 finalObjectColor = finalColor + u_globalAmbient * u_materialAmbiance + u_materialEmission;
 
 	//FOG stuff
 	if(v_distance < u_fogStart)

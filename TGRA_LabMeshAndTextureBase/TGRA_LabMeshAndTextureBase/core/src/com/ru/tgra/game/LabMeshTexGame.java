@@ -32,7 +32,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	private float angle;
 
 	private Camera playerCam;
-	private Camera railCam;
 	
 	private float startTime[] = {2,15};
 	private float endTime[] = {10,25};
@@ -42,6 +41,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 	private BSplineMotion[] targetRail;
 	private Point3D targetOnRail;
+	
+	private boolean onRail;
 	
 	private float fov = 90.0f;
 	
@@ -57,10 +58,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 	ParticleEffect smallBubbles;
 	ParticleEffect mediumBubbles;
-	ParticleEffect groundRustle1;
-	ParticleEffect groundRustle2;
-	ParticleEffect groundRustle3;
-	ParticleEffect groundRustle4;
+	//ParticleEffect groundRustle1;
+	//ParticleEffect groundRustle2;
+	//ParticleEffect groundRustle3;
+	//ParticleEffect groundRustle4;
 	
 	//BezierMotion motion;
 
@@ -123,7 +124,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		mediumBubbles = new ParticleEffect(new Point3D(3.0f,0.0f,2.4f), 
 				15.0f, 1.3f, smallBubble, 0.1f, 0.2f, 0.4f, 
 				bubbleTex02, bubbleTex01, false);
-		
+		/*
 		groundRustle1 = new ParticleEffect(new Point3D(2,-0.5f,2), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
@@ -135,7 +136,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		groundRustle3 = new ParticleEffect(new Point3D(4,-0.5f,2), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
-		
+		*/
 		/*groundRustle4 = new ParticleEffect(new Point3D(2,0,1), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);*/
@@ -166,9 +167,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		playerCam = new Camera();
 		playerCam.look(new Point3D(-2f, 3f, -2f), new Point3D(0,2,0), new Vector3D(0,1,0));
-
-		railCam = new Camera();
-		railCam.perspectiveProjection(30.0f, 1, 3, 100);
+		
+		onRail = true;
 		
 		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		
@@ -232,7 +232,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tent0pts.add(new Point3D(3.5f, 0.8f, 2.5f));
 		tent0pts.add(new Point3D(3.0f, 0.8f, 2.0f));
 
-		tent1pts.add(new Point3D(4, 2, 3));
 		tent1pts.add(new Point3D(4, 1.9f, 3));
 		tent1pts.add(new Point3D(5, 1.5f, 3));
 		tent1pts.add(new Point3D(5, 1.1f, 3));
@@ -247,16 +246,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tent2pts.add(new Point3D(4.2f, 0.2f, 2.8f));
 		tent2pts.add(new Point3D(4, 0.1f, 2.8f));
 		
-		tent3pts.add(new Point3D(4, 2, 3.6f));
 		tent3pts.add(new Point3D(4, 1.9f, 3.6f));
 		tent3pts.add(new Point3D(3, 1.5f, 3.2f));
-		tent3pts.add(new Point3D(3, 1.1f, 3));
-		tent3pts.add(new Point3D(3, 0.7f, 3));
-		tent3pts.add(new Point3D(3, 0.5f, 3));
+		tent3pts.add(new Point3D(3, 1.2f, 3));
+		tent3pts.add(new Point3D(3, 1.0f, 3));
+		tent3pts.add(new Point3D(3, 0.8f, 3));
 		
 		// Other side
 		
-		tent4pts.add(new Point3D(2, 2, 2.4f));
+		//tent4pts.add(new Point3D(2, 2, 2.4f));
 		tent4pts.add(new Point3D(2, 1.9f, 2.4f));
 		tent4pts.add(new Point3D(1, 1.2f, 2.4f));
 		tent4pts.add(new Point3D(1, 0.7f, 2.4f));
@@ -371,60 +369,58 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		angle += 180.0f * deltaTime;
 
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			playerCam.slide(-3.0f * deltaTime, 0, 0);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			playerCam.slide(3.0f * deltaTime, 0, 0);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-			playerCam.slide(0, 0, -3.0f * deltaTime);
-			//cam.walkForward(3.0f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-			playerCam.slide(0, 0, 3.0f * deltaTime);
-			//cam.walkForward(-3.0f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.R)) {
-			playerCam.slide(0, 3.0f * deltaTime, 0);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.F)) {
-			playerCam.slide(0, -3.0f * deltaTime, 0);
-		}
-
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			playerCam.yaw(-90.0f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			playerCam.yaw(90.0f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			playerCam.pitch(90.0f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			playerCam.pitch(-90.0f * deltaTime);
-		}
-
-		if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			playerCam.roll(-90.0f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-			playerCam.roll(90.0f * deltaTime);
-		}
-
-		if(Gdx.input.isKeyPressed(Input.Keys.T)) {
-			fov -= 30.0f * deltaTime;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.G)) {
-			fov += 30.0f * deltaTime;
-		}
-
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+		if(!onRail)
 		{
-			Gdx.graphics.setDisplayMode(500, 500, false);
-			Gdx.app.exit();
+			if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+				playerCam.slide(-3.0f * deltaTime, 0, 0);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+				playerCam.slide(3.0f * deltaTime, 0, 0);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+				playerCam.slide(0, 0, -3.0f * deltaTime);
+				//cam.walkForward(3.0f * deltaTime);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+				playerCam.slide(0, 0, 3.0f * deltaTime);
+				//cam.walkForward(-3.0f * deltaTime);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.R)) {
+				playerCam.slide(0, 3.0f * deltaTime, 0);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.F)) {
+				playerCam.slide(0, -3.0f * deltaTime, 0);
+			}
+	
+			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				playerCam.yaw(-90.0f * deltaTime);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				playerCam.yaw(90.0f * deltaTime);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				playerCam.pitch(90.0f * deltaTime);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				playerCam.pitch(-90.0f * deltaTime);
+			}
+	
+			if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
+				playerCam.roll(-90.0f * deltaTime);
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+				playerCam.roll(90.0f * deltaTime);
+			}
+	
+			if(Gdx.input.isKeyPressed(Input.Keys.T)) {
+				fov -= 30.0f * deltaTime;
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.G)) {
+				fov += 30.0f * deltaTime;
+			}
 		}
 		
+	
 		if(currentTime <= endTime[0])
 		{
 			cameraRail[0].getCurrentPosition(currentTime, camOnRail);
@@ -436,6 +432,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			cameraRail[1].getCurrentPosition(currentTime, camOnRail);
 			targetRail[1].getCurrentPosition(currentTime, targetOnRail);
 		}
+	
 		
 		//do all updates to the game
 		for (int i = 0; i < 8; i++)
@@ -448,11 +445,21 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			tentacles[i].reach(modelPosition[i]);
 		}
 		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.U))
+		{
+			onRail = !onRail;
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+		{
+			Gdx.graphics.setDisplayMode(500, 500, false);
+			Gdx.app.exit();
+		}
+		
 		smallBubbles.update(deltaTime);
 		mediumBubbles.update(deltaTime);
-		groundRustle1.update(deltaTime);
-		groundRustle2.update(deltaTime);
-		groundRustle3.update(deltaTime);
+		//groundRustle1.update(deltaTime);
+		//groundRustle2.update(deltaTime);
+		//groundRustle3.update(deltaTime);
 		//roundRustle4.update(deltaTime);
 	}
 	
@@ -471,112 +478,91 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
 		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
 
-		for(int viewNum = 0; viewNum < 2; viewNum++)
+
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glScissor(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		if(onRail)
 		{
-			if(viewNum == 0)
-			{
-				Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				Gdx.gl.glScissor(0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				playerCam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 100.0f);
-				shader.setViewMatrix(playerCam.getViewMatrix());
-				shader.setProjectionMatrix(playerCam.getProjectionMatrix());
-				shader.setEyePosition(playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
-				
-				shader.setFogStart(0.0f);
-				shader.setFogEnd(20.0f);
-				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			}
-			else
-			{
-				Gdx.gl.glViewport(Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				Gdx.gl.glScissor(Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-				
-				railCam.look(camOnRail, targetOnRail, new Vector3D(0,1,0));
-				
-				railCam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(2*Gdx.graphics.getHeight()), 0.2f, 100.0f);
-				shader.setViewMatrix(railCam.getViewMatrix());
-				shader.setProjectionMatrix(railCam.getProjectionMatrix());
-				shader.setEyePosition(railCam.eye.x, railCam.eye.y, railCam.eye.z, 1.0f);
-				
-				shader.setFogStart(90.0f);
-				shader.setFogEnd(100.0f);
-				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			}
-
-	
-			//BoxGraphic.drawOutlineCube();
-			//SphereGraphic.drawSolidSphere();
-			//SphereGraphic.drawOutlineSphere();
-
-
-			ModelMatrix.main.loadIdentityMatrix();
-			
-			//shader.setLightPosition(3, 3, 3, 1.0f);
-			shader.setLightPosition(0, playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
-
-
-			float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
-			float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
-
-			//shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
-			shader.setSpotDirection(0,-playerCam.n.x, -playerCam.n.y, -playerCam.n.z, 0.0f);
-
-			//shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
-			shader.setSpotExponent(0,2.0f);
-			shader.setConstantAttenuation(0,1.0f);
-			shader.setLinearAttenuation(0,0.00f);
-			shader.setQuadraticAttenuation(0,0.00f);
-			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
-			
-			shader.setLightPosition(1, 3, 4, 3, 1.0f);
-
-			shader.setSpotDirection(1, 0, -0.3f, 0, 0.0f);
-			
-			shader.setSpotExponent(1,10.0f);
-			shader.setConstantAttenuation(1,1.0f);
-			shader.setLinearAttenuation(1,0.00f);
-			shader.setQuadraticAttenuation(1,0.00f);
-			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
-			
-			shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
-			
-
-			/*ModelMatrix.main.pushMatrix();
-			shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f);
-			shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-			shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-			shader.setShininess(10.0f);
-
-			ModelMatrix.main.addTranslation(0.0f, 0.0f, 0.0f);
-			ModelMatrix.main.addScale(10.0f, 0.1f, 10.0f);
-			shader.setModelMatrix(ModelMatrix.main.getMatrix());
-			BoxGraphic.drawSolidCube(shader, null, null);
-			
-			ModelMatrix.main.popMatrix();*/
-			//draw stones
-			
-			
-			drawStones();
-			//draw fishtank
-			drawFishTank();
-			
-			smallBubbles.draw(shader);
-			mediumBubbles.draw(shader);
-			
-			groundRustle2.draw(shader);
-			//groundRustle4.draw(shader);
-			groundRustle1.draw(shader);
-			groundRustle3.draw(shader);
-			
-			drawFishTankEdges();
-
-	
-			
+			playerCam.look(camOnRail, targetOnRail, new Vector3D(0,1,0));
 		}
+		
+		playerCam.perspectiveProjection(fov, (float)Gdx.graphics.getWidth() / (float)(Gdx.graphics.getHeight()), 0.2f, 100.0f);
+		shader.setViewMatrix(playerCam.getViewMatrix());
+		shader.setProjectionMatrix(playerCam.getProjectionMatrix());
+		shader.setEyePosition(playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
+		
+		shader.setFogStart(0.0f);
+		shader.setFogEnd(20.0f);
+		shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
+		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+		//BoxGraphic.drawOutlineCube();
+		//SphereGraphic.drawSolidSphere();
+		//SphereGraphic.drawOutlineSphere();
+
+
+		ModelMatrix.main.loadIdentityMatrix();
+		
+		//shader.setLightPosition(3, 3, 3, 1.0f);
+		shader.setLightPosition(0, playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
+
+
+		float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
+		float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
+
+		//shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
+		shader.setSpotDirection(0,-playerCam.n.x, -playerCam.n.y, -playerCam.n.z, 0.0f);
+
+		//shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
+		shader.setSpotExponent(0,2.0f);
+		shader.setConstantAttenuation(0,1.0f);
+		shader.setLinearAttenuation(0,0.00f);
+		shader.setQuadraticAttenuation(0,0.00f);
+		shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
+		
+		shader.setLightPosition(1, 3, 4, 3, 1.0f);
+
+		shader.setSpotDirection(1, 0, -0.3f, 0, 0.0f);
+		
+		shader.setSpotExponent(1,10.0f);
+		shader.setConstantAttenuation(1,1.0f);
+		shader.setLinearAttenuation(1,0.00f);
+		shader.setQuadraticAttenuation(1,0.00f);
+		shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
+		
+		shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
+		
+
+		/*ModelMatrix.main.pushMatrix();
+		shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f);
+		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(10.0f);
+
+		ModelMatrix.main.addTranslation(0.0f, 0.0f, 0.0f);
+		ModelMatrix.main.addScale(10.0f, 0.1f, 10.0f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();*/
+		//draw stones
+		
+		
+		drawStones();
+		//draw fishtank
+		drawFishTank();
+		
+		smallBubbles.draw(shader);
+		mediumBubbles.draw(shader);
+		
+		//groundRustle2.draw(shader);
+		//groundRustle4.draw(shader);
+		//groundRustle1.draw(shader);
+		//groundRustle3.draw(shader);
+		
+		drawFishTankEdges();
 	}
 
 	@Override

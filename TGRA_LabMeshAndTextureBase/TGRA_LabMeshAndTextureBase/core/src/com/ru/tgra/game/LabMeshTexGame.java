@@ -233,6 +233,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tent0pts.add(new Point3D(3.0f, 0.8f, 2.0f));
 
 		tent1pts.add(new Point3D(4, 1.9f, 3));
+		tent1pts.add(new Point3D(4, 1.9f, 3));
 		tent1pts.add(new Point3D(5, 1.5f, 3));
 		tent1pts.add(new Point3D(5, 1.1f, 3));
 		tent1pts.add(new Point3D(5, 0.7f, 3));
@@ -254,7 +255,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		// Other side
 		
-		//tent4pts.add(new Point3D(2, 2, 2.4f));
+		tent4pts.add(new Point3D(2, 2, 2.4f));
 		tent4pts.add(new Point3D(2, 1.9f, 2.4f));
 		tent4pts.add(new Point3D(1, 1.2f, 2.4f));
 		tent4pts.add(new Point3D(1, 0.7f, 2.4f));
@@ -290,14 +291,14 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		patch0 = new BezierPatch(controlPoints);
 		
 		tentacleMotion = new BSplineMotion[8];
-		tentacleMotion[0] = new BSplineMotion(tent0pts, 2.0f, 25.0f);
-		tentacleMotion[1] = new BSplineMotion(tent1pts, 2.0f, 25.0f);
-		tentacleMotion[2] = new BSplineMotion(tent2pts, 2.0f, 25.0f);
-		tentacleMotion[3] = new BSplineMotion(tent3pts, 2.0f, 25.0f);
-		tentacleMotion[4] = new BSplineMotion(tent4pts, 2.0f, 25.0f);
-		tentacleMotion[5] = new BSplineMotion(tent5pts, 2.0f, 25.0f);
-		tentacleMotion[6] = new BSplineMotion(tent6pts, 2.0f, 25.0f);
-		tentacleMotion[7] = new BSplineMotion(tent7pts, 2.0f, 25.0f);
+		tentacleMotion[0] = new BSplineMotion(tent0pts, 1.0f, 35.0f);
+		tentacleMotion[1] = new BSplineMotion(tent1pts, 1.0f, 35.0f);
+		tentacleMotion[2] = new BSplineMotion(tent2pts, 1.0f, 35.0f);
+		tentacleMotion[3] = new BSplineMotion(tent3pts, 1.0f, 35.0f);
+		tentacleMotion[4] = new BSplineMotion(tent4pts, 1.0f, 35.0f);
+		tentacleMotion[5] = new BSplineMotion(tent5pts, 1.0f, 35.0f);
+		tentacleMotion[6] = new BSplineMotion(tent6pts, 1.0f, 35.0f);
+		tentacleMotion[7] = new BSplineMotion(tent7pts, 1.0f, 35.0f);
 
 		modelPosition = new Point3D[8];
 		for(int i = 0; i < 8; i++)
@@ -311,11 +312,11 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		targetRail = new BSplineMotion[2];
 		
 		ArrayList<Point3D> cameraRail0Points = new ArrayList<Point3D>();
-		cameraRail0Points.add(new Point3D(4,1,2));
+		cameraRail0Points.add(new Point3D(3.2f, 0.8f, 2.8f));
 		cameraRail0Points.add(new Point3D(3,1.2f,2));
 		cameraRail0Points.add(new Point3D(3,1.4f,1));
-		cameraRail0Points.add(new Point3D(3,1.8f,1));
-		cameraRail0Points.add(new Point3D(3,2,1));
+		cameraRail0Points.add(new Point3D(3,1.2f,1));
+		cameraRail0Points.add(new Point3D(3,0.8f,1));
 		
 		
 		cameraRail[0] = new BSplineMotion(cameraRail0Points, startTime[0], endTime[0]);
@@ -332,9 +333,11 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ArrayList<Point3D> targetRailPoints0 = new ArrayList<Point3D>();
 		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 3.0f));
-		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 2.0f));
-		targetRailPoints0.add(new Point3D(4.0f, 0.2f, 3.0f));
 		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 0.8f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 1.1f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 1.2f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 1.4f, 3.0f));
 		
 		targetRail[0] = new BSplineMotion(targetRailPoints0, startTime[0], endTime[0]);
 		
@@ -520,17 +523,35 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setConstantAttenuation(0,1.0f);
 		shader.setLinearAttenuation(0,0.00f);
 		shader.setQuadraticAttenuation(0,0.00f);
-		shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
+		if(startTime[1] < currentTime)
+		{
+			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
+		}
+		else
+		{
+			shader.setLightColor(0, 0.0f, 0.0f, 0.0f, 1.0f);
+		}
 		
 		shader.setLightPosition(1, 3, 4, 3, 1.0f);
-
 		shader.setSpotDirection(1, 0, -0.3f, 0, 0.0f);
-		
 		shader.setSpotExponent(1,10.0f);
 		shader.setConstantAttenuation(1,1.0f);
 		shader.setLinearAttenuation(1,0.00f);
 		shader.setQuadraticAttenuation(1,0.00f);
 		shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
+		if(startTime[0] > currentTime)
+		{
+			shader.setLightColor(1, 0.0f, 0.0f, 0.0f, 1.0f);
+		}
+		else if(endTime[0] < currentTime)
+		{
+			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
+		}
+		else
+		{
+			float lerp = 1-(endTime[0]-currentTime)/(endTime[0]-startTime[0]);
+			shader.setLightColor(1, lerp, 0.0f, 0.0f, 1.0f);
+		}
 		
 		shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
 		

@@ -96,7 +96,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		shader = new Shader();
 
-		tex = new Texture(Gdx.files.internal("textures/seamless_ground2048.png")); 
+		tex = new Texture(Gdx.files.internal("textures/sand09.png")); 
 		tex2 = new Texture(Gdx.files.internal("textures/granite02.png")); 
 		tex3 = new Texture(Gdx.files.internal("textures/marble01.png")); 
 		tex4 = new Texture(Gdx.files.internal("textures/pinkMarble01.png")); 
@@ -128,7 +128,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
 		
-		groundRustle2 = new ParticleEffect(new Point3D(4,-0.5f,4), 
+		groundRustle2 = new ParticleEffect(new Point3D(3,-0.5f,2), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
 		
@@ -136,9 +136,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
 		
-		groundRustle4 = new ParticleEffect(new Point3D(2,-0.5f,4), 
+		/*groundRustle4 = new ParticleEffect(new Point3D(2,0,1), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
-				ground01, ground02, true);
+				ground01, ground02, true);*/
 		//fire
 		/*particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
 										120.0f, 1.0f, 0.4f, 0.1f, 0.2f, 0.3f, 
@@ -453,7 +453,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		groundRustle1.update(deltaTime);
 		groundRustle2.update(deltaTime);
 		groundRustle3.update(deltaTime);
-		groundRustle4.update(deltaTime);
+		//roundRustle4.update(deltaTime);
 	}
 	
 	private void display()
@@ -482,10 +482,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				shader.setProjectionMatrix(playerCam.getProjectionMatrix());
 				shader.setEyePosition(playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
 				
-				//shader.setFogStart(0.0f);
-				//shader.setFogEnd(20.0f);
-				//shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
-				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+				shader.setFogStart(0.0f);
+				shader.setFogEnd(20.0f);
+				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 			else
@@ -502,8 +502,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				
 				shader.setFogStart(90.0f);
 				shader.setFogEnd(100.0f);
-				shader.setFogColor(1.0f, 1.0f, 1.0f, 1.0f);
-				Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+				shader.setFogColor(0.0f, 0.0f, 0.0f, 1.0f);
+				Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			}
 
@@ -532,7 +532,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setQuadraticAttenuation(0,0.00f);
 			shader.setLightColor(0, 1.0f, 1.0f, 1.0f, 1.0f);
 			
-			/*shader.setLightPosition(1, 4, 4, 4, 1.0f);
+			shader.setLightPosition(1, 3, 4, 3, 1.0f);
 
 			shader.setSpotDirection(1, 0, -0.3f, 0, 0.0f);
 			
@@ -540,7 +540,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			shader.setConstantAttenuation(1,1.0f);
 			shader.setLinearAttenuation(1,0.00f);
 			shader.setQuadraticAttenuation(1,0.00f);
-			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);*/
+			shader.setLightColor(1, 1.0f, 0.0f, 0.0f, 1.0f);
 			
 			shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
 			
@@ -564,9 +564,16 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 			//draw fishtank
 			drawFishTank();
 			
+			smallBubbles.draw(shader);
+			mediumBubbles.draw(shader);
 			
+			groundRustle2.draw(shader);
+			//groundRustle4.draw(shader);
+			groundRustle1.draw(shader);
+			groundRustle3.draw(shader);
 			
-			//tent.drawTentacle(shader);
+			drawFishTankEdges();
+
 	
 			
 		}
@@ -581,7 +588,124 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		display();
 
 	}
+	
+	private void drawFishTankEdges() {
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
 
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(-0.1f, 1.0f, -0.1f);
+		ModelMatrix.main.addScale(0.2f, 2.5f, 0.2f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(6.1f, 1.0f, -0.1f);
+		ModelMatrix.main.addScale(0.2f, 2.5f, 0.2f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(6.1f, 1.0f, 6.1f);
+		ModelMatrix.main.addScale(0.2f, 2.5f, 0.2f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(-0.1f, 1.0f, 6.1f);
+		ModelMatrix.main.addScale(0.2f, 2.5f, 0.2f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(3.0f, 0.0f, -0.1f);
+		ModelMatrix.main.addScale(6.0f, 0.5f, 0.1f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(3.0f, 0.0f, 6.1f);
+		ModelMatrix.main.addScale(6.0f, 0.5f, 0.1f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(6.1f, 0.0f, 3.0f);
+		ModelMatrix.main.addScale(0.1f, 0.5f, 6.0f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		shader.setMaterialDiffuse(0.75164f, 0.60648f, 0.22648f, 1.0f);
+		shader.setMaterialAmbiance(0.24725f, 0.1995f, 0.0745f, 1.0f);
+		shader.setMaterialSpecular(0.628281f, 0.555802f, 0.366065f, 1.0f);
+		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
+		shader.setShininess(0.4f);
+
+		ModelMatrix.main.pushMatrix();
+		ModelMatrix.main.addTranslation(-0.1f, 0.0f, 3.0f);
+		ModelMatrix.main.addScale(0.1f, 0.5f, 6.0f);
+		shader.setModelMatrix(ModelMatrix.main.getMatrix());
+		BoxGraphic.drawSolidCube(shader, null, null);
+		
+		ModelMatrix.main.popMatrix();
+		
+		
+		
+	}
 	private void drawFishTank()
 	{
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
@@ -628,16 +752,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
 		tentacles[5].drawTentacle(shader);
-		
-		//TODO Here are ground rustle
-		//Gdx.gl.glEnable(GL20.GL_BLEND); 
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		//groundRustle2.draw(shader);
-
-		//groundRustle4.draw(shader);
-		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		//Gdx.gl.glDisable(GL20.GL_BLEND); 
+	
 		
 		shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
@@ -646,13 +761,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		Otto.draw(shader, null, null);
 		
 
-		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		smallBubbles.draw(shader);
-		mediumBubbles.draw(shader);
 
-		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 		shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f); //looks good, red
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
@@ -679,44 +788,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
 		tentacles[7].drawTentacle(shader);
-		
-		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		//groundRustle1.draw(shader);
-		
-		//TODO Here are ground rustle
-		//groundRustle3.draw(shader);
-		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		/*shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 0.1f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 0.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 0);
-		shader.setShininess(1.0f);
-
-		ModelMatrix.main.pushMatrix();
-		ModelMatrix.main.addTranslation(3.0f, 1.4f, 3.0f);
-		ModelMatrix.main.addScale(6.0f, 3.0f, 6.0f);
-		shader.setModelMatrix(ModelMatrix.main.getMatrix());
-		BoxGraphic.drawSolidCube(shader, null, null);
-		
-		ModelMatrix.main.popMatrix();*/
-		
-
-/*		shader.setMaterialDiffuse(0.0f, 1.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.5f, 0.5f, 0.5f, 1);
-		shader.setShininess(5.0f);
-
-		ModelMatrix.main.pushMatrix();
-		ModelMatrix.main.addTranslation(modelPosition0.x, modelPosition0.y, modelPosition0.z);
-		ModelMatrix.main.addScale(0.5f, 0.5f, 0.5f);
-		shader.setModelMatrix(ModelMatrix.main.getMatrix());
-
-		SphereGraphic.drawSolidSphere(shader, null, null);
-		
-		ModelMatrix.main.popMatrix(); */
-
-		
+	
 
 
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
@@ -770,10 +842,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 	private void drawStones()
 	{
-		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(0.0f);
+		
 
 		ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation(4.0f, 0.0f, 4.0f);
@@ -785,10 +854,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
-		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(0.0f);
+	
 
 		ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation(5.0f, 0.0f, 1.0f);
@@ -799,11 +865,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
-		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(0.0f);
-
+		
 		ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation(3.0f, 0.0f, 4.0f);
 		ModelMatrix.main.addScale(0.5f, 0.5f, 0.5f);
@@ -813,10 +875,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
-		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(0.0f);
+	
 
 		ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation(5.0f, 0.0f, 3.0f);
@@ -828,11 +887,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
-		shader.setMaterialDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-
+	
 		ModelMatrix.main.pushMatrix();
 		ModelMatrix.main.addTranslation(1.0f, 0.0f, 5.0f);
 		ModelMatrix.main.addScale(0.1f, 0.2f, 0.3f);

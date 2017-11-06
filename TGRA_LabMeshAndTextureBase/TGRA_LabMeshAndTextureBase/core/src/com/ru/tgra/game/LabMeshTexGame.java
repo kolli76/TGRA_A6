@@ -247,31 +247,31 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tent2pts.add(new Point3D(4.2f, 0.2f, 2.8f));
 		tent2pts.add(new Point3D(4, 0.1f, 2.8f));
 		
-		tent3pts.add(new Point3D(4, 2, 3.5f));
-		tent3pts.add(new Point3D(4, 1.9f, 3.5f));
-		tent3pts.add(new Point3D(5, 1.2f, 3.8f));
-		tent3pts.add(new Point3D(5, 0.7f, 3.8f));
-		tent3pts.add(new Point3D(4.5f, 0.5f, 3.8f));
-		tent3pts.add(new Point3D(4.2f, 0.2f, 3.9f));
-		tent3pts.add(new Point3D(4, 0.1f, 4.2f));
-
+		tent3pts.add(new Point3D(4, 2, 3.6f));
+		tent3pts.add(new Point3D(4, 1.9f, 3.6f));
+		tent3pts.add(new Point3D(3, 1.5f, 3.2f));
+		tent3pts.add(new Point3D(3, 1.1f, 3));
+		tent3pts.add(new Point3D(3, 0.7f, 3));
+		tent3pts.add(new Point3D(3, 0.5f, 3));
+		
 		// Other side
 		
 		tent4pts.add(new Point3D(2, 2, 2.4f));
 		tent4pts.add(new Point3D(2, 1.9f, 2.4f));
 		tent4pts.add(new Point3D(1, 1.2f, 2.4f));
 		tent4pts.add(new Point3D(1, 0.7f, 2.4f));
-		tent4pts.add(new Point3D(1.5f, 0.5f, 2.4f));
-		tent4pts.add(new Point3D(1.8f, 0.2f, 2.4f));
-		tent4pts.add(new Point3D(2, 0.1f, 2.4f));
+		tent4pts.add(new Point3D(1.5f, 0.5f, 2.0f));
+		tent4pts.add(new Point3D(1.8f, 0.7f, 1.4f));
+		tent4pts.add(new Point3D(1.7f, 1.2f, 1.8f));
+		tent4pts.add(new Point3D(1.2f, 1.4f, 1.8f));
 		
 		tent5pts.add(new Point3D(2, 2, 2.8f));
 		tent5pts.add(new Point3D(2, 1.9f, 2.8f));
 		tent5pts.add(new Point3D(1, 1.2f, 2.8f));
 		tent5pts.add(new Point3D(1, 0.7f, 2.8f));
-		tent5pts.add(new Point3D(1.5f, 0.5f, 2.8f));
-		tent5pts.add(new Point3D(1.8f, 0.2f, 2.8f));
-		tent5pts.add(new Point3D(2, 0.1f, 2.8f));
+		tent5pts.add(new Point3D(1f, 0.5f, 2.8f));
+		tent5pts.add(new Point3D(0.8f, 0.7f, 2.8f));
+		tent5pts.add(new Point3D(0.5f, 1.2f, 2.8f));
 		
 		tent6pts.add(new Point3D(2, 2, 3.2f));
 		tent6pts.add(new Point3D(2, 1.9f, 3.6f));

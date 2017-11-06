@@ -33,8 +33,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 	private Camera playerCam;
 	
-	private float startTime[] = {2,15};
-	private float endTime[] = {10,25};
+	private float startTime[] = {2,15,28};
+	private float endTime[] = {10,25,30};
 	
 	private BSplineMotion[] cameraRail;
 	private Point3D camOnRail;
@@ -308,8 +308,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		camOnRail = new Point3D(10,10,5);
 		targetOnRail = new Point3D(0,0,0);
-		cameraRail = new BSplineMotion[2];
-		targetRail = new BSplineMotion[2];
+		cameraRail = new BSplineMotion[3];
+		targetRail = new BSplineMotion[3];
 		
 		ArrayList<Point3D> cameraRail0Points = new ArrayList<Point3D>();
 		cameraRail0Points.add(new Point3D(3.2f, 0.8f, 2.8f));
@@ -318,9 +318,18 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		cameraRail0Points.add(new Point3D(3,1.2f,1));
 		cameraRail0Points.add(new Point3D(3,0.8f,1));
 		
-		
 		cameraRail[0] = new BSplineMotion(cameraRail0Points, startTime[0], endTime[0]);
 		
+		ArrayList<Point3D> targetRailPoints0 = new ArrayList<Point3D>();
+		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 0.8f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 1.1f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 1.2f, 3.0f));
+		targetRailPoints0.add(new Point3D(3.0f, 1.4f, 3.0f));
+		
+		targetRail[0] = new BSplineMotion(targetRailPoints0, startTime[0], endTime[0]);
+
 		ArrayList<Point3D> cameraRail1Points = new ArrayList<Point3D>();
 		cameraRail1Points.add(new Point3D(3,2,-2.0f));
 		cameraRail1Points.add(new Point3D(3,2,-1.5f));
@@ -332,16 +341,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 
 		cameraRail[1] = new BSplineMotion(cameraRail1Points, startTime[1], endTime[1]);
 		
-		ArrayList<Point3D> targetRailPoints0 = new ArrayList<Point3D>();
-		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 3.0f));
-		targetRailPoints0.add(new Point3D(3.0f, 0.2f, 3.0f));
-		targetRailPoints0.add(new Point3D(3.0f, 0.8f, 3.0f));
-		targetRailPoints0.add(new Point3D(3.0f, 1.1f, 3.0f));
-		targetRailPoints0.add(new Point3D(3.0f, 1.2f, 3.0f));
-		targetRailPoints0.add(new Point3D(3.0f, 1.4f, 3.0f));
-		
-		targetRail[0] = new BSplineMotion(targetRailPoints0, startTime[0], endTime[0]);
-		
 		ArrayList<Point3D> targetRailPoints1 = new ArrayList<Point3D>();
 		targetRailPoints1.add(new Point3D(3.0f, 0.2f, 3.0f));
 		targetRailPoints1.add(new Point3D(3.0f, 0.2f, 3.0f));
@@ -352,6 +351,24 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		targetRail[1] = new BSplineMotion(targetRailPoints1, startTime[1], endTime[1]);
 		
+		ArrayList<Point3D> cameraRail2Points = new ArrayList<Point3D>();
+		cameraRail2Points.add(new Point3D(1.5f,3.0f,-1.0f));
+		cameraRail2Points.add(new Point3D(1.0f,3.1f,-1.0f));
+		cameraRail2Points.add(new Point3D(0.5f,3.3f,-1.0f));
+		cameraRail2Points.add(new Point3D(0.0f,3.6f,-1.0f));
+		cameraRail2Points.add(new Point3D(-0.5f,3.9f,-1.0f));
+		cameraRail2Points.add(new Point3D(-1.0f,4.2f,-1.0f));
+
+		cameraRail[2] = new BSplineMotion(cameraRail2Points, startTime[2], endTime[2]);
+		
+		ArrayList<Point3D> targetRailPoints2 = new ArrayList<Point3D>();
+		targetRailPoints2.add(new Point3D(2.0f, 0.3f, 2.0f));
+		targetRailPoints2.add(new Point3D(2.2f, 0.3f, 2.2f));
+		targetRailPoints2.add(new Point3D(2.6f, 0.3f, 2.6f));
+		targetRailPoints2.add(new Point3D(3.0f, 0.3f, 3.0f));
+
+		targetRail[2] = new BSplineMotion(targetRailPoints2, startTime[2], endTime[2]);
+
 	}
 
 	private void input()
@@ -437,6 +454,12 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		{
 			cameraRail[1].getCurrentPosition(currentTime, camOnRail);
 			targetRail[1].getCurrentPosition(currentTime, targetOnRail);
+		}
+		
+		if(startTime[2] <= currentTime)
+		{
+			cameraRail[2].getCurrentPosition(currentTime, camOnRail);
+			targetRail[2].getCurrentPosition(currentTime, targetOnRail);
 		}
 	
 		

@@ -323,12 +323,13 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ArrayList<Point3D> cameraRail1Points = new ArrayList<Point3D>();
 		cameraRail1Points.add(new Point3D(3,2,-2.0f));
-		cameraRail1Points.add(new Point3D(2.8f,3,-1.8f));
-		cameraRail1Points.add(new Point3D(2.4f,4,-1.7f));
-		cameraRail1Points.add(new Point3D(2.0f,5,-1.2f));
-		cameraRail1Points.add(new Point3D(1.5f,6,-0.5f));
-		cameraRail1Points.add(new Point3D(1.0f,7, 0));
-		
+		cameraRail1Points.add(new Point3D(3,2,-1.5f));
+		cameraRail1Points.add(new Point3D(2.8f,2,-1.0f));
+		cameraRail1Points.add(new Point3D(2.5f,2,-1.0f));
+		cameraRail1Points.add(new Point3D(2,2,-1.0f));
+		cameraRail1Points.add(new Point3D(2.0f,2.5f,-1.0f));
+		cameraRail1Points.add(new Point3D(1.5f,3.0f,-1.0f));
+
 		cameraRail[1] = new BSplineMotion(cameraRail1Points, startTime[1], endTime[1]);
 		
 		ArrayList<Point3D> targetRailPoints0 = new ArrayList<Point3D>();
@@ -344,8 +345,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		ArrayList<Point3D> targetRailPoints1 = new ArrayList<Point3D>();
 		targetRailPoints1.add(new Point3D(3.0f, 0.2f, 3.0f));
 		targetRailPoints1.add(new Point3D(3.0f, 0.2f, 3.0f));
-		targetRailPoints1.add(new Point3D(3.0f, 0.2f, 3.0f));
-		targetRailPoints1.add(new Point3D(3.0f, 0.2f, 3.0f));
+		targetRailPoints1.add(new Point3D(3.0f, 0.8f, 3.0f));
+		targetRailPoints1.add(new Point3D(2.5f, 1.3f, 3.0f));
+		targetRailPoints1.add(new Point3D(2.5f, 0.7f, 2.5f));
+		targetRailPoints1.add(new Point3D(2.0f, 0.3f, 2.0f));
 		
 		targetRail[1] = new BSplineMotion(targetRailPoints1, startTime[1], endTime[1]);
 		
@@ -735,68 +738,15 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		ModelMatrix.main.popMatrix();
 		
-		
-		shader.setMaterialDiffuse(0.5f, 0.5f, 0.5f, 1.0f); //gray
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[2].drawTentacle(shader);
-
-		shader.setMaterialDiffuse(0.0f, 1.0f, 0.0f, 1.0f); //green
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[3].drawTentacle(shader);
-
-		shader.setMaterialDiffuse(0.0f, 0.0f, 1.0f, 1.0f); //blue looks good
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[4].drawTentacle(shader);
-
-		shader.setMaterialDiffuse(0.0f, 1.0f, 1.0f, 1.0f); //cyan looks good
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[5].drawTentacle(shader);
-	
-		
 		shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
 		shader.setShininess(1.0f);
 		Otto.draw(shader, null, null);
 		
-
-
-
-		shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f); //looks good, red
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[0].drawTentacle(shader);
-
-		shader.setMaterialDiffuse(1.0f, 1.0f, 1.0f, 1.0f); //white
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[1].drawTentacle(shader);
-
-	
-
-		shader.setMaterialDiffuse(1.0f, 1.0f, 0.0f, 1.0f); //yellow, looks good
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[6].drawTentacle(shader);
-
-		shader.setMaterialDiffuse(1.0f, 0.0f, 1.0f, 1.0f); //purple looks good
-		shader.setMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(1.0f);
-		tentacles[7].drawTentacle(shader);
-	
-
+		for(int i = 0; i < 8; i++){
+			tentacles[i].drawTentacle(shader);
+		}
 
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);

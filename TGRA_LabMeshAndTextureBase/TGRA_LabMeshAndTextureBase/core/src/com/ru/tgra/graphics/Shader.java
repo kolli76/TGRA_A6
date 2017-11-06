@@ -39,7 +39,7 @@ public class Shader {
 
 	
 	//private int lightPosLoc;
-	private int numberOfLights = 1;
+	private int numberOfLights = 2;
 	private int lightPosLoc[] = new int[numberOfLights];
 	private int spotDirLoc[] = new int[numberOfLights];
 	private int spotExpLoc[] = new int[numberOfLights];

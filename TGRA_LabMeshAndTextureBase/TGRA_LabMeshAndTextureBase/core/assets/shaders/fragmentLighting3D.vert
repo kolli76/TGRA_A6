@@ -14,7 +14,7 @@ uniform mat4 u_projectionMatrix;
 
 uniform vec4 u_eyePosition;
 
-const int lightNumber = 1;
+const int lightNumber = 2;
 
 struct lightVertex
 {

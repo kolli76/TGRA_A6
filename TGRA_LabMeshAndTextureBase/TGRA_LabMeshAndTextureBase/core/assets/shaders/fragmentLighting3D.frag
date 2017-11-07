@@ -119,7 +119,7 @@ void main()
 		finalColor += lightCalcColor;
 	}
 	// end for each light
-	vec4 finalObjectColor = finalColor + u_globalAmbient * u_materialAmbiance + u_materialEmission;
+	vec4 finalObjectColor = finalColor + u_globalAmbient * u_materialAmbiance + materialEmission;
 
 	//FOG stuff
 	if(v_distance < u_fogStart)

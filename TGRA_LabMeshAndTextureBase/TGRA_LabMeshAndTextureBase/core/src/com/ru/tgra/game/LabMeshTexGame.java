@@ -58,9 +58,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	
 	ParticleEffect smallBubbles;
 	ParticleEffect mediumBubbles;
-	//ParticleEffect groundRustle1;
-	//ParticleEffect groundRustle2;
-	//ParticleEffect groundRustle3;
+	ParticleEffect groundRustle1;
+	ParticleEffect groundRustle2;
+	ParticleEffect groundRustle3;
 	//ParticleEffect groundRustle4;
 	
 	//BezierMotion motion;
@@ -124,7 +124,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		mediumBubbles = new ParticleEffect(new Point3D(3.0f,0.0f,2.4f), 
 				15.0f, 1.3f, smallBubble, 0.1f, 0.2f, 0.4f, 
 				bubbleTex02, bubbleTex01, false);
-		/*
+		
 		groundRustle1 = new ParticleEffect(new Point3D(2,-0.5f,2), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
@@ -136,7 +136,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		groundRustle3 = new ParticleEffect(new Point3D(4,-0.5f,2), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
-		*/
+		
 		/*groundRustle4 = new ParticleEffect(new Point3D(2,0,1), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);*/
@@ -486,9 +486,9 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		smallBubbles.update(deltaTime);
 		mediumBubbles.update(deltaTime);
-		//groundRustle1.update(deltaTime);
-		//groundRustle2.update(deltaTime);
-		//groundRustle3.update(deltaTime);
+		groundRustle1.update(deltaTime);
+		groundRustle2.update(deltaTime);
+		groundRustle3.update(deltaTime);
 		//roundRustle4.update(deltaTime);
 	}
 	
@@ -603,11 +603,14 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		
 		smallBubbles.draw(shader);
 		mediumBubbles.draw(shader);
+		if(startTime[1] < currentTime)
+		{
+			groundRustle2.draw(shader);
+			//groundRustle4.draw(shader);
+			groundRustle1.draw(shader);
+			groundRustle3.draw(shader);
+		}
 		
-		//groundRustle2.draw(shader);
-		//groundRustle4.draw(shader);
-		//groundRustle1.draw(shader);
-		//groundRustle3.draw(shader);
 		
 		drawFishTankEdges();
 	}

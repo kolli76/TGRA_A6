@@ -64,8 +64,7 @@ void main()
 
 	position = u_viewMatrix * position;
 	//eye coordinates
-	
-	//v_distance = -position.z;
+
 
 	v_uv = a_uv;
 	gl_Position = u_projectionMatrix * position;

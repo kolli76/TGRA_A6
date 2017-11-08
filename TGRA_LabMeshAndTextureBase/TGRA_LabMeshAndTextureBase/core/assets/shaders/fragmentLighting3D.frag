@@ -76,11 +76,6 @@ void main()
 		materialDiffuse.a *= texture2D(u_alphaTexture, v_uv).r;  
 	}
 	
-/*	if(materialDiffuse.a < 0.1)
-	{
-		discard; //throw away, color wont be in the frame buffer and depth value wont be put in the depth buffer
-	}
-*/
 	vec4 materialSpecular = u_materialSpecular;
 
 	//Lighting
@@ -94,7 +89,7 @@ void main()
 	}
 	float length_n = length(v_normal);
 	
-	 // = u_globalAmbient + u_materialEmission;
+
 	vec4 finalColor;
 	float spotAttenuation = 1.0;
 	float phongAttenuation;

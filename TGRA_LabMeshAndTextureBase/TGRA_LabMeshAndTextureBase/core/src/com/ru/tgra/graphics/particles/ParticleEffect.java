@@ -78,10 +78,10 @@ public class ParticleEffect {
 		{		
 			if(this.tex == true)
 			{
-																		//-0.5f for smoke, +0.5f for fire, +1.5 for bubbles
+																	
 				Vector3D particleSpeed = new Vector3D(rand.nextFloat() - 0.5f, rand.nextFloat() -0.5f, rand.nextFloat() - 0.5f);
-				particleSpeed.scale(0.02f); //slow down for smoke 0.2f, comment out for fire, 0.6 for bubbles
-				//randomize where we generate for smoke, for fire only pos.xyz
+				particleSpeed.scale(0.02f); 
+			
 				Particle particle = new Particle(new Point3D(position.x + rand.nextFloat() - 0.5f, position.y + rand.nextFloat() - 0.5f, position.z + rand.nextFloat() - 0.5f), 
 						particleSpeed, particleSize, particleLifeTime, fadeInTime, fadeOutTime, maxAlpha,
 						emissionTexture, alphaTexture);
@@ -92,9 +92,9 @@ public class ParticleEffect {
 			else
 			{
 				Vector3D particleSpeed = new Vector3D(rand.nextFloat() - 0.5f, rand.nextFloat() + 1.5f, rand.nextFloat() - 0.5f);
-				//particleSpeed.scale(0.09f); //slow down for smoke 0.2f, comment out for fire, 0.6 for bubbles
-				//randomize where we generate for smoke, for fire only pos.xyz
-				Particle particle = new Particle(new Point3D(position.x /*+ rand.nextFloat() - 0.5f*/, position.y/* + rand.nextFloat() - 0.5f*/, position.z/* + rand.nextFloat() - 0.5f*/), 
+				particleSpeed.scale(0.6f); 
+
+				Particle particle = new Particle(new Point3D(position.x , position.y, position.z), 
 						particleSpeed, particleSize, particleLifeTime, fadeInTime, fadeOutTime, maxAlpha,
 						emissionTexture, alphaTexture);
 				
@@ -117,7 +117,7 @@ public class ParticleEffect {
 		
 		Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 		Gdx.gl.glEnable(GL20.GL_BLEND); 
-		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
+
 		if(this.tex == true)
 		{
 			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);//smoke with graygradient
@@ -125,8 +125,6 @@ public class ParticleEffect {
 		else
 		{
 			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE); //source color, destination color, traditional transparency
-		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
 		}
 		for(Particle particle: particles)
 		{

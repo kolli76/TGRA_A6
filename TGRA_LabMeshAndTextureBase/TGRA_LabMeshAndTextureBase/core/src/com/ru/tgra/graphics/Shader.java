@@ -35,10 +35,8 @@ public class Shader {
 	private int eyePosLoc;
 
 	private int globalAmbLoc;
-	//private int colorLoc;
 
 	
-	//private int lightPosLoc;
 	private int numberOfLights = 2;
 	private int lightPosLoc[] = new int[numberOfLights];
 	private int spotDirLoc[] = new int[numberOfLights];
@@ -206,8 +204,7 @@ public class Shader {
 		Gdx.gl.glUniform4f(globalAmbLoc, r, g, b, a);
 	}
 	public void setLightPosition(int i, float x, float y, float z, float w)
-	{
-		//Gdx.gl.glUniform4f(lightPosLoc, x, y, z, w);	
+	{	
 		if (i >= numberOfLights){return;}
 			Gdx.gl.glUniform4f(lightPosLoc[i], x, y, z, w);
 	}

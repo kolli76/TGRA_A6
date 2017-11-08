@@ -73,7 +73,7 @@ public class Particle {
 		ModelMatrix.main.pushMatrix();
 		
 		ModelMatrix.main.addTranslation(position.x, position.y, position.z);
-		//ModelMatrix.main.addRotationY(rotationAngle);
+
 		
 		ModelMatrix.main.addScale(size, size, size);
 

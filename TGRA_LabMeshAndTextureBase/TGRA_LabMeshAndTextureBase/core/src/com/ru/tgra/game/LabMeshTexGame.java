@@ -61,9 +61,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 	ParticleEffect groundRustle1;
 	ParticleEffect groundRustle2;
 	ParticleEffect groundRustle3;
-	//ParticleEffect groundRustle4;
-	
-	//BezierMotion motion;
 
 	BSplineMotion tentacleMotion[];
 	Point3D modelPosition[];
@@ -93,7 +90,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		Gdx.input.setInputProcessor(this);
 
 		DisplayMode disp = Gdx.graphics.getDesktopDisplayMode();
-		//Gdx.graphics.setDisplayMode(disp.width, disp.height, true);
 
 		shader = new Shader();
 
@@ -104,8 +100,8 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		tex5 = new Texture(Gdx.files.internal("textures/slate01.png"));
 		tex6 = new Texture(Gdx.files.internal("textures/phobos2k.png"));
 		tex7 = new Texture(Gdx.files.internal("textures/seaweed.png"));
-		bubbleTex01 = new Texture(Gdx.files.internal("textures/bubble01.png"));    //bubble 02 eða 01 eða 01 eða 01
-		bubbleTex02 = new Texture(Gdx.files.internal("textures/bubble02.png")); //bubble 01 eða 02 eða 03 eða 04
+		bubbleTex01 = new Texture(Gdx.files.internal("textures/bubble01.png"));   
+		bubbleTex02 = new Texture(Gdx.files.internal("textures/bubble02.png")); 
 		ground01 = new Texture(Gdx.files.internal("textures/groundRustle06.png"));
 		ground02 = new Texture(Gdx.files.internal("textures/groundRustle06.png"));
 		
@@ -119,12 +115,12 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		float smallBubble = 0.1f;
 		float mediumBubble = 0.2f;
 		smallBubbles = new ParticleEffect(new Point3D(3.0f,0.0f,2.4f), 
-				15.0f, 1.0f, mediumBubble, 0.1f, 0.2f, 0.4f, 
+				15.0f, 1.3f, mediumBubble, 0.1f, 0.2f, 0.4f, 
 				bubbleTex02, bubbleTex01, false);
 		mediumBubbles = new ParticleEffect(new Point3D(3.0f,0.0f,2.4f), 
-				15.0f, 1.0f, smallBubble, 0.1f, 0.2f, 0.4f, 
+				15.0f, 1.3f, smallBubble, 0.1f, 0.2f, 0.4f, 
 				bubbleTex02, bubbleTex01, false);
-		
+		//ground rustling
 		groundRustle1 = new ParticleEffect(new Point3D(2,-0.5f,2), 
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
@@ -137,21 +133,7 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
 				ground01, ground02, true);
 		
-		/*groundRustle4 = new ParticleEffect(new Point3D(2,0,1), 
-				20.0f, 5.0f, 0.8f, 2.0f, 2.2f, 0.1f, 
-				ground01, ground02, true);*/
-		//fire
-		/*particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
-										120.0f, 1.0f, 0.4f, 0.1f, 0.2f, 0.3f, 
-										particleTex, alphaTex);*/
-		//smoke
-	/*	particleEffect = new ParticleEffect(new Point3D(-1,4,-1), 
-				20.0f, 10.0f, 2.8f, 2.0f, 2.2f, 0.3f, 
-				tex, particleTex);
-		
-		particleEffect.fadeInTime = 5.0f;
-		particleEffect.fadeOutTime = 5.0f;
-		particleEffect.setParticleLifeTime(15.0f);*/
+
 
 		BoxGraphic.create();
 		SphereGraphic.create();
@@ -489,7 +471,6 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		groundRustle1.update(deltaTime);
 		groundRustle2.update(deltaTime);
 		groundRustle3.update(deltaTime);
-		//roundRustle4.update(deltaTime);
 	}
 	
 	private void display()
@@ -498,14 +479,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
 		
 		Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-		//Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
-
-		//Gdx.gl.glEnable(GL20.GL_BLEND); //switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
-										//when we put a new pixel we mix the new color in a pixel with old value of pixel
-		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE); //add up colors, the one thats there with the one thats coming in
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA); //source color, destination color, traditional transparency
-		//Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+		//switch on blending, everytime something has gone through the open gl pipeline, it leaves some color
+		//when we put a new pixel we mix the new color in a pixel with old value of pixel
+		//add up colors, the one thats there with the one thats coming in
+		//source color, destination color, traditional transparency
 
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -527,24 +504,14 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		//BoxGraphic.drawOutlineCube();
-		//SphereGraphic.drawSolidSphere();
-		//SphereGraphic.drawOutlineSphere();
-
 
 		ModelMatrix.main.loadIdentityMatrix();
 		
-		//shader.setLightPosition(3, 3, 3, 1.0f);
 		shader.setLightPosition(0, playerCam.eye.x, playerCam.eye.y, playerCam.eye.z, 1.0f);
 
 
-		float s2 = Math.abs((float)Math.sin((angle / 1.312) * Math.PI / 180.0));
-		float c2 = Math.abs((float)Math.cos((angle / 1.312) * Math.PI / 180.0));
-
-		//shader.setSpotDirection(0.0f, -1.0f, 0.0f, 0.0f);
 		shader.setSpotDirection(0,-playerCam.n.x, -playerCam.n.y, -playerCam.n.z, 0.0f);
 
-		//shader.setSpotDirection(s2, -0.3f, c2, 0.0f);
 		shader.setSpotExponent(0,2.0f);
 		shader.setConstantAttenuation(0,1.0f);
 		shader.setLinearAttenuation(0,0.00f);
@@ -582,31 +549,17 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		shader.setGlobalAmbient(0.1f, 0.1f, 0.1f, 1);
 		
 
-		/*ModelMatrix.main.pushMatrix();
-		shader.setMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f);
-		shader.setMaterialSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-		shader.setMaterialEmission(0.0f, 0.0f, 0.0f, 1);
-		shader.setShininess(10.0f);
-
-		ModelMatrix.main.addTranslation(0.0f, 0.0f, 0.0f);
-		ModelMatrix.main.addScale(10.0f, 0.1f, 10.0f);
-		shader.setModelMatrix(ModelMatrix.main.getMatrix());
-		BoxGraphic.drawSolidCube(shader, null, null);
-		
-		ModelMatrix.main.popMatrix();*/
-		//draw stones
-		
 		
 		drawStones();
-		//draw fishtank
+
 		drawFishTank();
 		
-		smallBubbles.draw(shader);
-		mediumBubbles.draw(shader);
+		
 		if(startTime[1] < currentTime)
 		{
+			smallBubbles.draw(shader);
+			mediumBubbles.draw(shader);
 			groundRustle2.draw(shader);
-			//groundRustle4.draw(shader);
 			groundRustle1.draw(shader);
 			groundRustle3.draw(shader);
 		}

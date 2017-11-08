@@ -119,10 +119,10 @@ public class LabMeshTexGame extends ApplicationAdapter implements InputProcessor
 		float smallBubble = 0.1f;
 		float mediumBubble = 0.2f;
 		smallBubbles = new ParticleEffect(new Point3D(3.0f,0.0f,2.4f), 
-				15.0f, 1.3f, mediumBubble, 0.1f, 0.2f, 0.4f, 
+				15.0f, 1.0f, mediumBubble, 0.1f, 0.2f, 0.4f, 
 				bubbleTex02, bubbleTex01, false);
 		mediumBubbles = new ParticleEffect(new Point3D(3.0f,0.0f,2.4f), 
-				15.0f, 1.3f, smallBubble, 0.1f, 0.2f, 0.4f, 
+				15.0f, 1.0f, smallBubble, 0.1f, 0.2f, 0.4f, 
 				bubbleTex02, bubbleTex01, false);
 		
 		groundRustle1 = new ParticleEffect(new Point3D(2,-0.5f,2), 
